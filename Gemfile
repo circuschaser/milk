@@ -37,3 +37,15 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'bootstrap-sass', '>= 3.0.0.0'
+gem 'cancan'
+gem 'devise'
+gem 'figaro'
+gem 'rolify'
+gem 'simple_form'
+
+group :development do
+  gem 'rails_layout'
+end
+
