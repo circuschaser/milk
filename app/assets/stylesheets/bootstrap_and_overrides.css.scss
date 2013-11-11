@@ -1,2 +1,45 @@
 @import "bootstrap";
-body { padding-top: 60px; }
+
+  $liteBlue:		#D4E6FC;
+  $liteGray:		#CED4DB;
+  $deepBlue:		#8CC1FF;
+
+  body {
+      padding-top: 60px;
+      background: linear-gradient(to bottom, white, $liteBlue 90%) fixed;
+  }
+
+  h3,
+  p {
+  	padding-left: 6px;
+  }
+
+  #logo img {
+      /*width: 160px;*/
+      height: 48px;
+      float: left;
+      /*padding-top: 2px;*/
+      /*padding: 0;*/
+      margin-right: -12px;
+      /*padding-top: 2px;*/
+    }
+
+  .navbar-collapse {
+  	padding-left: 0;
+  	li {
+      float: right;
+  	}
+  }
+
+/* BUTTONS                                             */
+
+  .btn {
+      margin: 8px 3px 8px 0;
+  }
+
+  .newbutton {
+    float:right;
+    .btn {
+      margin: -2px 0 0 0;      
+    }
+  }

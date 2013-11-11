@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  milk: 1
+  bmilk: 1
+  cream: 1
+  m_total: 1
+  extra: 9.99
+  total: 9.99
+  payment: 9.99
+
+two:
+  milk: 1
+  bmilk: 1
+  cream: 1
+  m_total: 1
+  extra: 9.99
+  total: 9.99
+  payment: 9.99

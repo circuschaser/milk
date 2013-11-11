@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title><%= content_for?(:title) ? yield(:title) : "Milk" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Milk" %>">
     <%= stylesheet_link_tag "application", media: "all" %>
+
+      <%= javascript_include_tag 'jquery-1.9.1.js' %>
+      <%= javascript_include_tag 'jquery-ui-1.10.3.custom.min' %>
+      
+      <%= javascript_include_tag 'application' %>
+      <%= csrf_meta_tag %>
+
+
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
   <body>
     <%# application layout styled for Twitter Bootstrap 3.0 %>
     <header>
-      <nav class="navbar navbar-default navbar-fixed-top">
+      <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

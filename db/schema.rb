@@ -11,7 +11,52 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108225912) do
+ActiveRecord::Schema.define(:version => 20131111195409) do
+
+  create_table "accounts", :force => true do |t|
+    t.integer  "buyer_id"
+    t.decimal  "balance"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "buyers", :force => true do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.string   "altphone"
+    t.string   "email"
+    t.boolean  "active",     :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "milkruns", :force => true do |t|
+    t.date     "date"
+    t.decimal  "gasprice"
+    t.integer  "distance"
+    t.integer  "mpg"
+    t.decimal  "iceprice"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "orders", :force => true do |t|
+    t.integer  "buyer_id"
+    t.integer  "milkrun_id"
+    t.integer  "milk"
+    t.integer  "buttermilk"
+    t.integer  "cream"
+    t.boolean  "driver"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "payments", :force => true do |t|
+    t.integer  "account_id"
+    t.decimal  "amount"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -37,7 +82,6 @@ ActiveRecord::Schema.define(:version => 20131108225912) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

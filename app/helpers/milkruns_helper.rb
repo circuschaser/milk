@@ -1,0 +1,2 @@
+module MilkrunsHelper
+end

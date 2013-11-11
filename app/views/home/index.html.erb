@@ -1,4 +1,32 @@
-<h3>Home</h3>
-<% @users.each do |user| %>
-  <p>User: <%=link_to user.name, user %></p>
-<% end %>
+<h3>MILK RUNS</h3>
+<div class="span8">
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>DATE</th>
+      <th>MILK</th>
+      <th>BUTTERMILK</th>
+      <th>CREAM</th>
+      <th>DRIVER</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= link_to user.name, user %></td>
+      <td><%= user.email %></td>
+      <td><%= user.phone %></td>
+      <td><%= user.roles.first.name.titleize unless user.roles.first.nil? %></td>
+      <td><%= user.orders.count %></td>
+
+      <td>
+        <a data-toggle="modal" href="#role-options-<%= user.id %>" class="btn btn-sm btn-default">Change role</a>
+        <%= render user %>
+      </td>
+      <td><%= link_to("Delete", user_path(user), class: "btn btn-sm btn-default", :data => { :confirm => "Are you sure?" }, :method => :delete) unless user == current_user %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+</div>

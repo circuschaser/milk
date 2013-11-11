@@ -1,0 +1,12 @@
+<h2>NEW MILK RUN</h2>
+
+<div class="form-vertical">
+	<%= simple_form_for @milkrun do |f| %>
+		<%= f.input :date %>
+		<%= f.association :user, collection: User.all(order: 'name') %>
+		<%= f.input :time %>
+		<%= f.input :gas, input_html: { value: "3.29"} %>
+		<%= f.input :ice, input_html: { value: "1.75"} %>
+	  <%= f.button :submit, 'Create', :class => 'btn-primary' %>
+	<% end %>
+</div>

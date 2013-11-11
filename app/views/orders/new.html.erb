@@ -1,0 +1,10 @@
+<h2>New Order</h2>
+
+<div class="form-vertical">
+	<%= simple_form_for @order do |f| %>
+		<%= f.input :milk %>
+		<%= f.input :bmilk, label: "buttermilk" %>
+		<%= f.input :cream %>
+	  <%= f.button :submit, 'Place Order', :class => 'btn-primary' %>
+	<% end %>
+</div>

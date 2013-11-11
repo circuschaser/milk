@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-11-09
+  time: 2013-11-09 17:26:07
+  gas: 9.99
+  driver: MyString
+
+two:
+  date: 2013-11-09
+  time: 2013-11-09 17:26:07
+  gas: 9.99
+  driver: MyString

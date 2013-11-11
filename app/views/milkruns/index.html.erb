@@ -1,0 +1,33 @@
+<h3>
+  MILK RUNS
+  <span class="newbutton"><%= link_to "New Milkrun", new_milkrun_path, class: "btn btn-default" %>
+</h3>
+<div class="span8">
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>DATE</th>
+      <th>DRIVER</th>
+      <th>ORDERS</th>
+      <th>TIME</th>
+      <th>GAS</th>
+      <th>ICE</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Milkrun.all.each do |m| %>
+    <tr>
+      <td><%= m.date %></td>
+      <td><%= m.user.name %></td>
+      <td><%= m.orders.count %></td>
+      <td><%= m.time %></td>
+      <td><%= m.gas %></td>
+      <td><%= m.ice %></td>
+      <td><%= link_to "X", m, method: :delete,
+                      data: { confirm: "Do you really want to delete this Milk Run?" } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
