@@ -13,18 +13,13 @@
 
 ActiveRecord::Schema.define(:version => 20131111195409) do
 
-  create_table "accounts", :force => true do |t|
-    t.integer  "buyer_id"
-    t.decimal  "balance"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "buyers", :force => true do |t|
-    t.string   "name"
+    t.string   "firstname"
+    t.string   "lastname"
     t.string   "phone"
     t.string   "altphone"
     t.string   "email"
+    t.integer  "deposit"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -32,10 +27,21 @@ ActiveRecord::Schema.define(:version => 20131111195409) do
 
   create_table "milkruns", :force => true do |t|
     t.date     "date"
+    t.decimal  "mprice"
+    t.decimal  "bprice"
+    t.decimal  "cprice"
     t.decimal  "gasprice"
     t.integer  "distance"
     t.integer  "mpg"
     t.decimal  "iceprice"
+    t.integer  "cool1"
+    t.integer  "cool1_ice"
+    t.integer  "cool2"
+    t.integer  "cool2_ice"
+    t.integer  "cool3"
+    t.integer  "cool3_ice"
+    t.integer  "bag"
+    t.decimal  "bag_ice"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -52,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20131111195409) do
   end
 
   create_table "payments", :force => true do |t|
-    t.integer  "account_id"
+    t.integer  "buyer_id"
     t.decimal  "amount"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

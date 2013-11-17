@@ -1,33 +1,83 @@
 <h3>
   MILK RUNS
-  <span class="newbutton"><%= link_to "New Milkrun", new_milkrun_path, class: "btn btn-default" %>
+  <span class="newbutton"><%= link_to "New Milk Run", new_milkrun_path, class: "btn btn-primary" %>
 </h3>
+</br>
 <div class="span8">
-<table class="table table-condensed">
+<table class="table">
   <thead>
     <tr>
       <th>DATE</th>
       <th>DRIVER</th>
-      <th>ORDERS</th>
-      <th>TIME</th>
+
+      <th class="order">MILK</th>
+      <th class="order">BUTTERMILK</th>
+      <th class="order">CREAM</th>
+
+      <th>MILK TOTAL</th>
       <th>GAS</th>
-      <th>ICE</th>
+
+      <th>FREEZER BAGS</th>
+
+      <th>ICE BAGS</th>
+      <th>ICE COST</th>
+
+      <th>TOTAL COST</th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
+    <% if !Milkrun.all.empty? %>
+
     <% Milkrun.all.each do |m| %>
     <tr>
-      <td><%= m.date %></td>
-      <td><%= m.user.name %></td>
-      <td><%= m.orders.count %></td>
-      <td><%= m.time %></td>
-      <td><%= m.gas %></td>
-      <td><%= m.ice %></td>
-      <td><%= link_to "X", m, method: :delete,
-                      data: { confirm: "Do you really want to delete this Milk Run?" } %></td>
+      <td><%= m.date.strftime("%B %d") %></td>
+      
+      <% driven = m.orders.find_by_driver(true) %>
+      <% if !driven.nil? %>
+      <td><%= m.orders.find_by_driver(true).buyer.name %></td>
+      <% else %>
+      <td>-</td>
+      <% end %>
+
+      <td class="number"><%= m.m_orders %></td>
+      <td class="number"><%= m.b_orders %></td>
+      <td class="number"><%= m.c_orders %></td>
+
+      <td class="number"><%= price(m.order_total) %></td>
+      <td class="number"><%= price(m.gas) %></td>
+
+      <td class="number"><%= m.freezer_bags %></td>
+
+      <td class="number"><%= m.ice %></td>
+      <td class="number"><%= price(m.ice_cost) %></td>
+
+      <td class="number"><%= price(m.total_cost) %></td>
+
+      <td>
+      <div class="icon_edit">
+        <%= link_to image_tag("icon_edit.png"), milkrun_path(m) %>
+      </div>
+      </td>
+      
+      <td>
+      <div class="icon">
+        <%= link_to image_tag("icon_delete.png"), m, method: :delete %>
+      </div>
+      </td>
+
     </tr>
     <% end %>
+
+    <% else %>
+    <tr>
+      <td>No Milk Runs Found.</td>
+    </tr>
+    <% end %>
+
   </tbody>
+
 </table>
 </div>
+

@@ -1,0 +1,12 @@
+<h2>NEW FAMILY</h2>
+
+<div class="form-vertical">
+	<%= simple_form_for @buyer do |f| %>
+		<%= f.input :firstname %>
+		<%= f.input :lastname %>
+		<%= f.input :email %>
+		<%= f.input :phone %>
+		<%= f.input :altphone %>
+	  <%= f.button :submit, 'Create', :class => 'btn-primary' %>
+	<% end %>
+</div>

@@ -1,0 +1,61 @@
+<% @milkrun = Milkrun.find(params[:id]) %>
+
+<h3>MILK RUN SETTINGS</h3>
+<p>
+	These SETTINGS are specific to the Milk Run scheduled for
+	 <span class="badge"><%= @milkrun.date.strftime("%B %d, %Y") %></span>
+</p>
+
+<%= simple_form_for @milkrun do |f| %>
+	<div id="date">
+		<%= f.input :date, order: [:month, :day, :year], label: false, class: "form-control" %>
+	</div>
+		<div id="trip">
+		<span class="name">TRIP VARIABLES</span>
+			<%= f.input :gasprice, label: false, input_html: {value: "3.29", class: "form-control"} %>
+			<span class="label">Gas Price</span>
+			<%= f.input :distance, label: false, input_html: {value: "260", class: "form-control"} %>
+			<span class="label">Distance</span>
+			<%= f.input :mpg, label: false, input_html: {value: "20", class: "form-control"} %>
+			<span class="label">Vehicle MPG</span>
+		</div>
+
+	<div id="milk">
+		<span class="name">PRICE PER UNIT</span>
+		<%= f.input :mprice, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Milk</span>
+		<%= f.input :bprice, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Buttermilk</span>
+		<%= f.input :cprice, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Cream</span>
+		<%= f.input :iceprice, label: false, input_html: { value: "1.75", class: "form-control"} %>
+			<span class="label">Ice Bag</span>
+	</div>
+
+	<div id="coolers">
+		<span class="name">GALLONS IN EACH</span>
+		<%= f.input :cool1, label: false, input_html: { class: "form-control"} %>
+			<span class="label">LG Cooler</span>
+		<%= f.input :cool2, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Cooler 2</span>
+		<%= f.input :cool3, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Cooler 3</span>
+		<%= f.input :bag, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Freezer bag</span>	</div>
+
+	<div id="ice">
+		<span class="name">ICE BAGS IN EACH</span>
+		<%= f.input :cool1_ice, label: false, input_html: { class: "form-control"} %>
+			<span class="label">LG Cooler</span>
+		<%= f.input :cool2_ice, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Cooler 2</span>
+		<%= f.input :cool3_ice, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Cooler 3</span>
+		<%= f.input :bag_ice, label: false, input_html: { class: "form-control"} %>
+			<span class="label">Freezer bag</span>
+	</div>
+	<div class="button">
+  <%= f.button :submit, 'Update', :class => 'btn-primary' %>
+	</div>
+
+	<% end %>

@@ -1,0 +1,102 @@
+<h3><div class="label label-default"><%= @milkrun.date.strftime("%B %d, %Y").upcase %></div>
+
+<div class="newbutton">	
+  <%= link_to "NEW ORDER", new_milkrun_order_path(@milkrun.id), class: "btn btn-primary" %>
+  <%= link_to "SETTINGS", edit_milkrun_path(@milkrun), class: "btn btn-default" %>
+</div>
+</h3>
+</br>
+<div class="span8">
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>DRIVER</th>
+      <th>NAME</th>
+
+      <th>MILK</th>
+      <th>BUTTER</th>
+      <th>CREAM</th>
+
+      <th>ORDER COST</th>
+      <th>TRIP COST</th>
+      <th>PPG</th>
+      <th>COST PER UNIT</th>
+      <th>ADJ COST PER UNIT</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <% if !@milkrun.orders.nil? %>
+	  <tbody>
+	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
+	    <% sorted.each do |ord| %>
+	    <tr>
+	    	<% if ord.driver? %>
+	      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+	      <td>...</td>
+	    	<% else %>
+	      <td></td>
+	      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+	    	<% end %>
+
+	      <td class="number"><%= ord.milk %></td>
+	      <td class="number"><%= ord.buttermilk %></td>
+	      <td class="number"><%= ord.cream %></td>
+	      <td class="number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
+
+	      <% if ord.driver? %>
+	      <td class="number">-</td>
+	      <td class="number">-</td>
+	      <td class="number">-</td>
+	      <td class="number">-</td>
+	      <% else %>
+	      <td class="number"><span class="dollar">$</span><%= price(ord.trip_cost) %></td>
+	      <td class="number"><%= ord.ppg %></td>
+	      <td class="number"><span class="dollar">$</span><%= price(ord.cap) %></td>
+	      <td class="number"><span class="dollar">$</span><%= price(ord.cap) %></td>
+	      <% end %>
+
+	      <td class="number">
+	      <div class="icon_edit">
+	      	<%= link_to image_tag("icon_edit.png"), edit_order_path(ord) %>
+		      </div>
+        </td>
+
+	      <td class="number">
+	      <div class="icon">
+	      	<%= link_to image_tag("icon_delete.png"), ord, method: :delete,
+	             data: { confirm: "Do you really want to delete this Order?" } %>
+		      </div>
+        </td>
+	    </tr>
+    	<% end %>
+  	</tbody>
+	  <tbody>
+	  	<% x = @milkrun %>
+	    <tr class="milkrun_totals">
+	    	<td></td>
+	    	<td></td>
+	      <td class="number"><%= x.m_orders %></td>
+	      <td class="number"><%= x.b_orders %></td>
+	      <td class="number"><%= x.c_orders %></td>
+
+	      <td class="number"><span class="dollar">$</span><%= price(x.order_total) %></td>
+	      <td class="number"><span class="dollar">$</span><%= price(x.total_trip_cost) %></td>
+	      <td class="number"><span class="dollar">$</span><%= price(x.total_unit_cost) %></td>
+	      <td class="number"><span class="dollar">$</span><%= price(x.c_orders) %></td>
+
+	    	<td></td>
+	    	<td></td>
+	    </tr>
+  	</tbody>
+  <% else %>
+	  <tbody>
+	  </tbody>
+  <% end %>
+
+</table>
+</div>
+
+
+

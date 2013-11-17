@@ -12,4 +12,8 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def price(thing)
+    number_to_currency(thing, unit: "")
+  end
+
 end

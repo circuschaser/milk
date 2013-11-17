@@ -1,6 +1,5 @@
 class Payment < ActiveRecord::Base
-  attr_accessible :amount
+  attr_accessible :amount, :buyer_id
 
   belongs_to :buyer
-  belongs_to :account
 end

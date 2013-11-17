@@ -1,8 +1,10 @@
-<h2>New Order
-	<span class="label label-info"><%= @milkrun.date.strftime("%B %d, %Y") %></span>
+<% @order = Order.find(params[:id]) %>
+
+<h2>Edit Order
+	<span class="label label-info"><%= @order.milkrun.date.strftime("%B %d, %Y") %></span>
 </h2>
 
-<%= simple_form_for ([@milkrun, @milkrun.orders.build]) do |f| %>
+<%= simple_form_for @order do |f| %>
 	<div id="neworder">
 
 		<%= f.association :buyer, label: false, collection: Buyer.all(order: "lastname") %>

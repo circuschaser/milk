@@ -1,0 +1,13 @@
+<h2>New Payment for <%= "#{@buyer.name}" %></h2>
+
+<div class="form-vertical">
+	<%= simple_form_for ([@buyer, @buyer.payments.build]) do |f| %>
+	
+		<span>Current Balance: <%= "#{@buyer.balance}" %></span>
+		<%= f.input :amount, default: "#{@buyer.balance}" %>
+
+	  <%= f.button :submit, 'Enter Payment', :class => 'btn-primary' %>
+
+	<% end %>
+</div>
+

@@ -1,0 +1,44 @@
+<h3>
+  <div class="label label-warning">FAMILIES</div>
+  <span class="newbutton"><%= link_to "New Family", new_buyer_path, class: "btn btn-default" %>
+</h3>
+</br>
+<div class="span8">
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>NAME</th>
+      <th>EMAIL</th>
+      <th>PHONE</th>
+      <th>ALTERNATE PHONE</th>
+      <th>BALANCE</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <% if !Buyer.active.nil? %>
+    <tbody>
+      <% Buyer.active.each do |b| %>
+      <tr>
+        <td><%= link_to "#{b.name}", b %></td>
+        <td><%= b.email %></td>
+        <td><%= b.phone %></td>
+        <td><%= b.altphone %></td>
+        <td></td>
+
+        <td>
+        <div class="icon">
+          <%= link_to image_tag("icon_delete.png"), b, method: :delete %>
+        </div>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+
+  <% else %>
+    <tbody>
+    </tbody>
+  <% end %>
+
+</table>
+</div>

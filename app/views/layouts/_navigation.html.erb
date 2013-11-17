@@ -2,6 +2,13 @@
 <%= link_to image_tag("milklogo.png"), root_path %>
 </div>
 
+<!-- <div class="span8"> -->
+<div class="btn-group">
+  <%= link_to "MILK RUNS", milkruns_path, class: "btn btn-default" %>
+  <%= link_to "FAMILIES", buyers_path, class: "btn btn-default" %>
+</div>
+<!-- </div> -->
+
 <ul class="nav pull-right">
 
   <% if user_signed_in? %>

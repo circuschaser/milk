@@ -1,0 +1,91 @@
+<!-- CREATE ARRAYS -->
+
+	<% sorted = [] %>
+	<% orders = @buyer.orders %>
+	<% payments = @buyer.payments %>
+
+	<% orders.each do |o| %>
+  	<% sorted.push(o) %>
+	<% end %>
+
+	<% payments.each do |p| %>
+		<% sorted.push(p) %>
+	<% end %>
+
+	<% sorted.sort! {|x,y| x.created_at <=> y.created_at } %>
+
+<h3><div class="label label-warning"><%= @buyer.name %></div>
+
+  <span class="newbutton"><%= link_to "New Payment", new_buyer_payment_path(@buyer.id), class: "btn btn-default" %>
+
+</h3>
+</br>
+<div class="span8">
+<table class="table">
+  <thead>
+    <tr>
+      <th>DATE</th>
+      <th>TYPE</th>
+      <th>MILK</th>
+      <th>BUTTERMILK</th>
+      <th>CREAM</th>
+      <th>AMOUNT</th>
+      <th>BALANCE</th>
+      <th>delete</th>
+    </tr>
+  </thead>
+
+  <% if !sorted.empty? %>
+	  <tbody>	    
+	    <% sorted.each do |t| %>
+	    <tr>
+    	<!-- DATE -->
+	    	<td><%= t.created_at.strftime("%B %d, %Y") %></td>
+
+    	<!-- TYPE -->
+	    	<% if t.is_a? Order %>
+		    	<td class="notice-order">Order</td>
+		    	<td><%= t.milk %></td>
+		    	<td><%= t.buttermilk %></td>
+		    	<td><%= t.cream %></td>
+	    	<% else %>
+		    	<td class="notice-payment">Payment</td>
+		    	<td></td>
+		    	<td></td>
+		    	<td></td>
+	    	<% end %>
+
+    	<!-- AMOUNT -->
+	    	<% if t.is_a? Order %>
+		    	<td class="notice-order"><%= price(t.order_cost) %></td>
+	    	<% else %>
+		    	<td class="notice-payment"><%= price(t.amount) %></td>
+	    	<% end %>
+
+	    <!-- BALANCE -->
+	    	<td>-</td>
+
+    	<!-- DELETE -->
+	    	<% if t.is_a? Payment %>
+	      <td>
+	      <div class="icon">
+	        <%= link_to image_tag("icon_delete.png"), t, method: :delete %>
+	      </div>
+	      </td>
+	    	<% else %>
+		    	<td></td>
+	    	<% end %>
+
+	    </tr>
+
+    	<% end %>
+  	</tbody>
+
+  <% else %>
+	  <tbody>
+	  	<td>No Transactions Found.</td>
+	  </tbody>
+  <% end %>
+
+</table>
+</div>
