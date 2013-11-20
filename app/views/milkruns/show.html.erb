@@ -16,12 +16,15 @@
       <th>MILK</th>
       <th>BUTTER</th>
       <th>CREAM</th>
-
       <th>ORDER COST</th>
-      <th>TRIP COST</th>
+
+      <th>PER GALLON</th>
       <th>PPG</th>
-      <th>COST PER UNIT</th>
-      <th>ADJ COST PER UNIT</th>
+
+      <th>TRIP COST</th>
+      <th>CAPPED</th>
+      <th>CAP PPG</th>
+
       <th></th>
       <th></th>
     </tr>
@@ -50,11 +53,26 @@
 	      <td class="number">-</td>
 	      <td class="number">-</td>
 	      <td class="number">-</td>
+	      <td class="number">-</td>
 	      <% else %>
+	      <td class="number"><span class="dollar">$</span><%= price(ord.pergallon) %></td>
+
+	      <% if ord.ppg > 1 %>
+	      <td class="number"><span class="label label-danger"><%= ord.ppg %></span></td>
+	      <% else %>
+	      <td class="number"><span class="label label-success"><%= ord.ppg %></span></td>
+	      <% end %>
+
 	      <td class="number"><span class="dollar">$</span><%= price(ord.trip_cost) %></td>
-	      <td class="number"><%= ord.ppg %></td>
-	      <td class="number"><span class="dollar">$</span><%= price(ord.cap) %></td>
-	      <td class="number"><span class="dollar">$</span><%= price(ord.cap) %></td>
+
+	      <td class="number"><%= ord.capped %></td>
+
+      	<% if ord.under == true %>
+	      <td class="number"><span class="label label-success"><%= ord.capped_ppg %></span></td>
+	      <% else %>
+	      <td class="number"><span class="label label-info"><%= ord.capped_ppg %></span></td>
+	      <% end %>
+
 	      <% end %>
 
 	      <td class="number">
@@ -82,12 +100,20 @@
 	      <td class="number"><%= x.c_orders %></td>
 
 	      <td class="number"><span class="dollar">$</span><%= price(x.order_total) %></td>
-	      <td class="number"><span class="dollar">$</span><%= price(x.total_trip_cost) %></td>
 	      <td class="number"><span class="dollar">$</span><%= price(x.total_unit_cost) %></td>
-	      <td class="number"><span class="dollar">$</span><%= price(x.c_orders) %></td>
+	      <td class="number">-</td>
+	      <td class="number"><span class="dollar">$</span><%= price(x.total_trip_cost) %></td>
+	      <td class="number"><span class="dollar">$</span><%= price(x.total_capped_cost) %></td>
+	      <td class="number">-</td>
 
 	    	<td></td>
-	    	<td></td>
+
+	    	<% if x.diff <= 0 %>
+	      <td class="number"><span class="label label-danger"><%= price(x.diff) %></span></td>
+	      <% else %>
+	      <td class="number"><span class="label label-success"><%= price(x.diff) %></span></td>
+	      <% end %>
+
 	    </tr>
   	</tbody>
   <% else %>

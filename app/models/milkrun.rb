@@ -63,7 +63,6 @@ class Milkrun < ActiveRecord::Base
     end
   end
 
-
   def ice
 		case 
   		when order_count <= cool1
@@ -78,7 +77,6 @@ class Milkrun < ActiveRecord::Base
     ice.ceil
   end
 
-
   def ice_cost
 		ice * iceprice
 	end
@@ -86,18 +84,30 @@ class Milkrun < ActiveRecord::Base
   def total_unit_cost
     t = 0
     orders.each do |i|
-      t += i.cap
+      t += i.pergallon
     end
     t
   end
 
-  def total_trip_cost
-    total_cost - order_total
+  def diff
+    total_capped_cost - total_trip_cost
   end
 
-	def total_cost
-		order_total + gas + ice_cost
-	end
+  def total_cost
+    order_total + gas + ice_cost
+  end
+
+  def total_trip_cost
+    gas + ice_cost
+  end
+
+  def total_capped_cost
+    t = 0
+    orders.each do |i|
+      t += i.capped
+    end
+    t
+  end
 
 end
 

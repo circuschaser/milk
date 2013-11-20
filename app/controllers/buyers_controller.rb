@@ -10,6 +10,10 @@ class BuyersController < ApplicationController
     end
   end
 
+  def index
+  	@buyers = Buyer.order('lastname ASC')
+  end
+
   def show
   	@buyer = Buyer.find(params[:id])
   end

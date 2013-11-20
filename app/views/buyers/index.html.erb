@@ -1,6 +1,10 @@
 <h3>
-  <div class="label label-warning">FAMILIES</div>
-  <span class="newbutton"><%= link_to "New Family", new_buyer_path, class: "btn btn-default" %>
+  <div class="btn-group">
+    <%= link_to "ACTIVE FAMILIES", milkruns_path, class: "btn btn-warning" %>
+    <%= link_to "INACTIVE FAMILIES", buyers_path, class: "btn btn-default" %>
+  </div>
+
+  <span class="newbutton"><%= link_to "New Family", new_buyer_path, class: "btn btn-default" %></span>
 </h3>
 </br>
 <div class="span8">
@@ -28,7 +32,7 @@
 
         <td>
         <div class="icon">
-          <%= link_to image_tag("icon_delete.png"), b, method: :delete %>
+          <%= link_to image_tag("icon_unarc.png"), deactivate_buyer_path(b) %>
         </div>
         </td>
       </tr>
