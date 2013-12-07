@@ -9,7 +9,7 @@
 	<div class="label label-warning"><%= price(@milkrun.order_total) %></div>
 </div>
 
-<div class="newbutton">	
+<div class="btn-group newbutton">	
   <%= link_to "NEW ORDER", new_milkrun_order_path(@milkrun.id), class: "btn btn-primary" %>
   <%= link_to "SETTINGS", edit_milkrun_path(@milkrun), class: "btn btn-default" %>
 </div>
@@ -81,6 +81,8 @@
 
 	      <td class="button">
 	      <div class="btn-group btn-group-xs">
+					<%= link_to image_tag("icon_pay.png"), new_buyer_payment_path(ord.buyer.id), class: "btn btn-success icon" %>
+
 	      	<%= link_to image_tag("icon_edit.png"), edit_order_path(ord), class: "btn btn-default icon" %>
 	      	<%= link_to image_tag("icon_delete2.png"), ord, class: "btn btn-warning icon", method: :delete,
 		             data: { confirm: "Do you really want to delete this Order?" } %>
