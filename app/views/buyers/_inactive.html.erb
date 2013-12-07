@@ -20,11 +20,11 @@
   <% end %>
 
     <td><%= b.deposit %></td>
-    
+
     <td class="button">
       <div class="btn-group btn-group-xs">
         <%= link_to image_tag("icon_edit.png"), edit_buyer_path(b), class: "btn btn-default icon" %>
-        <%= link_to image_tag("icon_arc.png"), deactivate_buyer_path(b), class: "btn btn-default icon" %>
+        <%= link_to image_tag("icon_arc.png"), activate_buyer_path(b), class: "btn btn-default icon" %>
       </div>
     </td>
   </tr>
