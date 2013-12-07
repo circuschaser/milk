@@ -25,17 +25,19 @@
       <% Buyer.active.each do |b| %>
       <tr>
         <td><%= link_to "#{b.name}", b %></td>
+
+        <td>
+          <div class="icon">
+            <%= link_to image_tag("icon_edit.png"), edit_buyer_path(b), class: "icon_edit" %>
+            <%= link_to image_tag("icon_unarc.png"), deactivate_buyer_path(b) %>
+          </div>
+        </td>
+        
         <td><%= b.email %></td>
         <td><%= b.phone %></td>
         <td><%= b.altphone %></td>
         <td><%= b.balance %></td>
 
-        <td>
-        <div class="icon">
-          <%= link_to image_tag("icon_edit.png"), edit_buyer_path(b), class: "icon_edit" %>
-          <%= link_to image_tag("icon_unarc.png"), deactivate_buyer_path(b) %>
-        </div>
-        </td>
       </tr>
       <% end %>
     </tbody>

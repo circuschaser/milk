@@ -25,6 +25,7 @@
     <tr>
       <th>DRIVER</th>
       <th>NAME</th>
+      <th></th>
 
       <th>MILK</th>
       <th>BUTTER</th>
@@ -38,7 +39,6 @@
       <th>AMOUNT DUE</th>
 
       <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -47,20 +47,49 @@
 	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
 	    <% sorted.each do |ord| %>
 	    <tr>
+	    	<!-- DRIVER -->
 	    	<% if ord.driver? %>
 		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
 		      <td><span class="label label-success"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
 	    	<% else %>
+	    	<!-- NON DRIVER -->
 	  	    <td></td>
 	    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
 	    	<% end %>
 
+	      <!-- BUTTONS -->
+	      <td class="button">
+		      <div class="btn-group btn-group-xs">
+		      	<!-- PAY BUYER -->
+		      	<% if ord.driver? %>
+						<%= link_to image_tag("icon_pay.png"), new_buyer_payment_path(ord.buyer.id), class: "btn btn-default icon" %>
+						<% else %>
+						<%= link_to image_tag("icon_pay.png"), new_buyer_payment_path(ord.buyer.id), class: "btn btn-success icon" %>
+						<% end %>
+						<!-- EDIT ORDER -->
+		      	<%= link_to image_tag("icon_edit.png"), edit_order_path(ord), class: "btn btn-default icon" %>
+		      	<!-- DELETE ORDER -->
+		      	<%= link_to image_tag("icon_delete2.png"), ord, class: "btn btn-warning icon", method: :delete,
+			             data: { confirm: "Do you really want to delete this Order?" } %>
+		      </div>
+        </td>
+
+	    	<!-- MILK GALLONS -->
 	      <td class="number"><%= ord.milk %></td>
+
+	    	<!-- BUTTERMILK GALLONS -->
 	      <td class="number"><%= ord.buttermilk %></td>
+
+	    	<!-- CREAM GALLONS -->
 	      <td class="number"><%= ord.cream %></td>
+
+	    	<!-- TOTAL GALLON COUNT -->
 	      <td class="number"><%= ord.gallons %></td>
+
+	    	<!-- ORDER COST -->
 	      <td class="number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
 
+	      <!-- TRIP COST -->
       	<% if ord.under == true %>
 		      <td class="number"><%= price(ord.capped) %></td>
 		      <td class="number">-</td>
@@ -69,6 +98,8 @@
 		      <td class="number"><%= price(ord.capped) %></td>
 		    <% end %>
 
+
+		    <!-- PER GALLON COST -->
       	<% if ord.under == true %>
 		      <td class="number"><span class="label label-info"><%= ord.capped_ppg %></span></td>
 	      <% elsif ord.capped_ppg > 1 %>
@@ -77,17 +108,8 @@
 	  	    <td class="number"><span class="label label-default"><%= ord.capped_ppg %></span></td>
 	      <% end %>
 
+	      <!-- TOTAL COST -->
 	      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
-
-	      <td class="button">
-	      <div class="btn-group btn-group-xs">
-					<%= link_to image_tag("icon_pay.png"), new_buyer_payment_path(ord.buyer.id), class: "btn btn-success icon" %>
-
-	      	<%= link_to image_tag("icon_edit.png"), edit_order_path(ord), class: "btn btn-default icon" %>
-	      	<%= link_to image_tag("icon_delete2.png"), ord, class: "btn btn-warning icon", method: :delete,
-		             data: { confirm: "Do you really want to delete this Order?" } %>
-	      </div>
-        </td>
 
 	    </tr>
     	<% end %>
@@ -95,8 +117,13 @@
 	  <tbody>
 	  	<% x = @milkrun %>
 	    <tr class="milkrun_totals">
+
+        <!-- INTENTIONALLY BLANK -->
 	    	<td></td>
 	    	<td></td>
+        <td></td>
+        <!--  -->
+
 	      <td class="number"><%= x.m_orders %></td>
 	      <td class="number"><%= x.b_orders %></td>
 	      <td class="number"><%= x.c_orders %></td>
