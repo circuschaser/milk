@@ -23,7 +23,7 @@
 		<%= link_to image_tag("icon_unarc2.png"), deactivate_buyer_path(@buyer), class: "icon_sm" %>
 	<% else %>
 		<div class="label label-default"><%= link_to "INACTIVE", activate_buyer_path(@buyer) %></div>
-		<%= link_to image_tag("icon_arc.png"), deactivate_buyer_path(@buyer), class: "icon_sm" %>
+		<%= link_to image_tag("icon_arc.png"), activate_buyer_path(@buyer), class: "icon_sm" %>
 	<% end %>
 	</div>
 
