@@ -1,7 +1,7 @@
 <% @order = Order.find(params[:id]) %>
 
 <h2>Edit Order
-	<span class="label label-info"><%= @order.milkrun.date.strftime("%B %d, %Y") %></span>
+	<span class="btn btn-default"><%= link_to @order.milkrun.date.strftime("%B %d, %Y"), @order.milkrun %></span>
 </h2>
 
 <%= simple_form_for @order do |f| %>

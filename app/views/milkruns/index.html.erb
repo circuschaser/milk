@@ -1,6 +1,10 @@
 <h3>
   MILK RUNS
-  <span class="newbutton"><%= link_to "New Milk Run", new_milkrun_path, class: "btn btn-primary" %>
+  <% if Milkrun.last.nil? %>
+  <span class="newbutton"><%= link_to "NEW MILK RUN", new_milkrun_path, class: "btn btn-primary" %>
+  <% else %>
+  <span class="newbutton"><%= link_to "NEW MILK RUN", duplicate_milkruns_path, class: "btn btn-primary" %>
+  <% end %>
 </h3>
 </br>
 <div class="span8">
@@ -10,9 +14,9 @@
       <th>DATE</th>
       <th>DRIVER</th>
 
-      <th class="order">MILK</th>
-      <th class="order">BUTTERMILK</th>
-      <th class="order">CREAM</th>
+      <th>MILK</th>
+      <th>BUTTERMILK</th>
+      <th>CREAM</th>
 
       <th>MILK TOTAL</th>
       <th>GAS</th>
@@ -24,7 +28,6 @@
 
       <th>TOTAL COST</th>
       <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -32,7 +35,7 @@
 
     <% Milkrun.all.each do |m| %>
     <tr>
-      <td><%= m.date.strftime("%B %d") %></td>
+      <td><%= link_to m.date.strftime("%B %d"), milkrun_path(m) %></td>
       
       <% driven = m.orders.find_by_driver(true) %>
       <% if !driven.nil? %>
@@ -55,16 +58,13 @@
 
       <td class="number"><%= price(m.total_cost) %></td>
 
-      <td>
-      <div class="icon_edit">
-        <%= link_to image_tag("icon_edit.png"), milkrun_path(m) %>
-      </div>
-      </td>
-      
-      <td>
-      <div class="icon">
-        <%= link_to image_tag("icon_delete.png"), m, method: :delete %>
-      </div>
+      <td class="button">
+        <div class="btn-group btn-group-xs">
+          <%= link_to image_tag("icon_view2.png"), milkrun_path(m), class: "btn btn-info icon_view" %>
+          <%= link_to image_tag("icon_edit.png"), edit_milkrun_path(m), class: "btn btn-default icon" %>
+          <%= link_to image_tag("icon_delete2.png"), m, class: "btn btn-warning icon",
+                method: :delete, data: { confirm: "Do you really want to delete this Milk Run?" } %>
+        </div>
       </td>
 
     </tr>

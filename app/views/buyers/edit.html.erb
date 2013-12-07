@@ -1,4 +1,8 @@
-<h2 class="btn btn-primary">NEW FAMILY</h2>
+<% @buyer = Buyer.find(params[:id]) %>
+
+<h2 class="btn btn-info lowerspace">EDIT INFO FOR 
+	<span class="btn btn-default"><%= link_to "#{@buyer.name}", buyer_path(@buyer) %></span></h2>
+<p></p>
 
 <%= simple_form_for @buyer do |f| %>
 	<div id="newfamily">
@@ -23,7 +27,7 @@
 	</div>
 
 		<div class="button">
-	  <%= f.button :submit, 'Create', :class => 'btn-primary' %>
+	  <%= f.button :submit, 'Update', :class => 'btn-primary' %>
   	</div>
 	
 	<% end %>

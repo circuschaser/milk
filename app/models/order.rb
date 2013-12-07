@@ -2,7 +2,8 @@ class Order < ActiveRecord::Base
   attr_accessible :milk, :buttermilk, :cream,
   								:driver,
   								:buyer_id,
-  								:milkrun_id
+  								:milkrun_id,
+                  :date
 
   belongs_to :buyer
   belongs_to :milkrun
@@ -36,6 +37,10 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def gallons
+    m + b + c
+  end
+
 # CALCULATIONS
 
   def m_cost
@@ -51,23 +56,11 @@ class Order < ActiveRecord::Base
   end
 
   def gas_cost
-  	if driver?
-  		0
-    elsif milkrun.orders.count - 1 <= 0
-      milkrun.gas / milkrun.orders.count
-    else
-      milkrun.gas / (milkrun.orders.count - 1)
-    end
+    milkrun.gas / milkrun.orders.count
   end
 
   def ice_cost
-    if driver?
-      0
-    elsif milkrun.orders.count - 1 <= 0
-      milkrun.ice_cost / milkrun.orders.count
-    else
-      milkrun.ice_cost / (milkrun.orders.count - 1)
-    end
+    milkrun.ice_cost / milkrun.orders.count
   end
 
   def order_cost
@@ -75,35 +68,20 @@ class Order < ActiveRecord::Base
   end
 
   # 
-  def pergallon
-    if driver?
-      0
-    else
-      m + b + c
-    end
-  end
 
   def ppg
-    if driver?
-      0
-    else
-      ppg = trip_cost / pergallon
-      ppg.round(2)
-    end
+    ppg = trip_cost / gallons
+    ppg.round(2)
   end
 
   # 
 
   def trip_cost
-    if driver?
-      0
-    else
-    	gas_cost + ice_cost
-    end
+  	gas_cost + ice_cost
   end
 
   def under
-    if ppg > 1
+    if gallons <= (milkrun.total_trip_cost/(milkrun.orders.count)).ceil
       true
     else
       false
@@ -116,25 +94,32 @@ class Order < ActiveRecord::Base
     
     milkrun.orders.each do |i|
       i.under
-      # X = buyers capped at $1
+      # X = count buyers capped at $1
       x += 1 unless i.under == false
 
-      # add per gallon cost for X
-      x_total += i.pergallon unless i.under == false
+      # sum trip cost contributions for capped buyers
+      x_total += i.gallons unless i.under == false
     end
 
     # Y = buyers not capped at $1
     y = milkrun.orders.count - x
-    if driver?
-      0
-    elsif under
-      capped = pergallon
+
+    if under
+      capped = gallons
       capped.round(2)
     else
-      uncapped = (milkrun.total_trip_cost - x_total) / (y - 1)
-      uncapped.round(2)
-    end
+      capped = (milkrun.total_trip_cost - x_total) / y
+      # round to nearest .25
+      share = ((capped * 4).round / 4.0).round(2)
 
+      # check break-even, add .25 if negative
+      if (share * y + x_total) < milkrun.total_trip_cost
+        share += 0.25
+        share
+      else
+        share
+      end
+    end
   end
 
   def capped_ppg
@@ -143,26 +128,29 @@ class Order < ActiveRecord::Base
     
     milkrun.orders.each do |i|
       i.under
+      # X = count buyers capped at $1
       x += 1 unless i.under == false
-      x_total += i.pergallon unless i.under == false
+
+      # sum trip cost contributions for capped buyers
+      x_total += i.gallons unless i.under == false
     end
 
+    # Y = buyers not capped at $1
     y = milkrun.orders.count - x
-    if driver?
-      0
-    elsif under
-      capped_ppg = pergallon / pergallon
+
+    if under
+      capped_ppg = gallons / gallons
       capped_ppg.round(2)
     else
-      uncapped_ppg = (milkrun.total_trip_cost - x_total) / y / pergallon
+      share = (milkrun.total_trip_cost - x_total)
+      uncapped_ppg =  capped / gallons
       uncapped_ppg.round(2)
+      # share.round(2)
     end
-
   end
 
-
-
-
-
+  def amount_due
+    order_cost + capped
+  end
 
 end

@@ -1,0 +1,32 @@
+<tbody>
+  <% Buyer.active.each do |b| %>
+  <tr>
+
+  <% if b.notes.empty? %>
+    <td class="number"></td>
+  <% else %>
+    <td class="number"><span class="label label-info"><%= link_to b.notes.count, b %></span></td>
+  <% end %>
+
+    <td><%= link_to "#{b.name}", b %></td>
+    <td><%= b.email %></td>
+    <td class="number"><%= b.phone %></td>
+    <td class="number"><%= b.altphone %></td>
+
+  <% if b.balance < 0 %>
+    <td class="number"><span class="label label-danger"><%= b.balance %></span></td>
+  <% else %>
+    <td class="number"><span class="label label-success"><%= b.balance %></span></td>
+  <% end %>
+
+    <td class="number"><span class="label label-default"><%= b.deposit %></span></td>
+    
+    <td class="button">
+      <div class="btn-group btn-group-xs">
+        <%= link_to image_tag("icon_edit.png"), edit_buyer_path(b), class: "btn btn-default icon" %>
+        <%= link_to image_tag("icon_unarc_wht.png"), deactivate_buyer_path(b), class: "btn btn-warning icon" %>
+      </div>
+    </td>
+  </tr>
+  <% end %>
+</tbody>

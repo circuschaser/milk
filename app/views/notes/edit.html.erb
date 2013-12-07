@@ -1,0 +1,22 @@
+<% @note = Note.find(params[:id]) %>
+
+<h2 class="btn btn-info lowerspace">EDIT NOTE FOR
+	<span class="btn btn-default"><%= link_to "#{@note.buyer.name}", buyer_path(@note.buyer) %></span></h2>
+<p></p>
+
+	<div id="newnote">
+	<%= simple_form_for @note do |f| %>
+
+		<span class="label">New Note</span>
+		<%= f.input :body, as: :text, input_html: {class: "form-control"} %>
+
+	</div>
+
+	<div class="button">
+	  <%= f.button :submit, 'Save Note', :class => 'btn-primary' %>
+	</div>
+
+	<% end %>
+
+
+

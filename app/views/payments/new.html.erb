@@ -1,13 +1,48 @@
-<h2>New Payment for <%= "#{@buyer.name}" %></h2>
-
-<div class="form-vertical">
+<h2 class="btn btn-success lowerspace">NEW PAYMENT FOR
+	<span class="btn btn-default"><%= link_to "#{@buyer.name}", buyer_path(@buyer) %></span></h2>
+<p></p>
 	<%= simple_form_for ([@buyer, @buyer.payments.build]) do |f| %>
-	
-		<span>Current Balance: <%= "#{@buyer.balance}" %></span>
-		<%= f.input :amount, default: "#{@buyer.balance}" %>
 
+	<% if @buyer.gas_credits > 0 %>
+		<div class="balance_info">
+		Drive Credit EARNED: <span id="balance" class="label label-info"> <%= price(@payment.buyer.gas_credits) %></span>
+		</div>
+	<% end %>
+
+	<div class="balance_info">
+	<% if @payment.buyer.balance >= 0 %>	
+		Current Balance: <span id="balance" class="label label-success"> <%= @payment.buyer.balance %></span>
+	<% else %>
+		Current Balance: <span id="balance" class="label label-danger"> <%= @payment.buyer.balance %></span>
+	<% end %>
+	</div>
+
+
+	<div id="payment">
+
+		<div id="paydate">
+			<%= f.input :date, order: [:month, :day, :year], label: false, class: "form-control" %>
+		</div>
+
+		<%= f.input :category, collection: [ "PayPal", "Gas Credit" ], input_html: { id: "type" } %>
+				<span class="label">Type</span>
+
+	<% if @buyer.gas_credits > 0 %>
+		<%= f.input :amount, label: false, input_html: { value: "#{@payment.buyer.gas_credits}", class: "form-control"} %>
+	<% elsif @payment.buyer.balance < 0 %>
+		<%= f.input :amount, label: false, input_html: { value: "#{@payment.buyer.balance * -1 }", class: "form-control"} %>
+	<% else %>
+		<%= f.input :amount, label: false, class: "form-control" %>
+	<% end %>
+				<span class="label">Amount</span>
+
+	</div>
+
+	<div class="button">
 	  <%= f.button :submit, 'Enter Payment', :class => 'btn-primary' %>
+	</div>
 
 	<% end %>
-</div>
+
+
 

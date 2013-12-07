@@ -12,7 +12,9 @@ Milk::Application.routes.draw do
 
   resources :buyers do
     resources :payments
+    resources :notes
     member do
+      get :notes
       get :payments
       get :activate
       get :deactivate
@@ -25,9 +27,13 @@ Milk::Application.routes.draw do
 
   resources :orders
   resources :payments
+  resources :notes
 
   resources :milkruns do
     resources :orders
+    collection do
+      get :duplicate
+    end
     member do
       get :orders
     end

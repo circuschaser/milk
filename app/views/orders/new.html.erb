@@ -1,11 +1,11 @@
-<h2>New Order
-	<span class="label label-info"><%= @milkrun.date.strftime("%B %d, %Y") %></span>
+<h2 class="btn btn-primary">NEW ORDER
+	<span class="btn btn-default"><%= link_to @order.milkrun.date.strftime("%B %d, %Y"), @order.milkrun %></span>
 </h2>
 
 <%= simple_form_for ([@milkrun, @milkrun.orders.build]) do |f| %>
 	<div id="neworder">
 
-		<%= f.association :buyer, label: false, collection: Buyer.all(order: "lastname") %>
+		<%= f.association :buyer, label: false, collection: Buyer.active(order: "lastname") %>
 		<span class="label">Family</span>
 
 		<%= f.input :driver, label: false, as: :boolean, default: "false", input_html: {class: "form-control"} %>
@@ -26,5 +26,6 @@
 	  <%= f.button :submit, 'Place Order', :class => 'btn-primary' %>
 	</div>
 		<%= f.input :milkrun_id, as: :hidden %>
+		<%= f.input :date, as: :hidden, default: "#{@milkrun.date}" %>
 
 <% end %>

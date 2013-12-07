@@ -33,6 +33,20 @@ class MilkrunsController < ApplicationController
     end
 	end
 
+	def duplicate
+		@milkrun = Milkrun.last
+		@new = @milkrun.dup
+		@milkrun.orders.each do |x|
+			@new.orders << x.dup
+		end
+
+		if @new.save
+			redirect_to edit_milkrun_path(@new)
+		else
+			redirect_to '/milkruns'
+		end
+	end
+
 	def show
 		@milkrun = Milkrun.find(params[:id])
 	end
@@ -40,13 +54,13 @@ class MilkrunsController < ApplicationController
 	def update
 		@milkrun = Milkrun.find(params[:id])
 		if @milkrun.update_attributes(params[:milkrun])
+			@milkrun.save
       flash[:success] = "Settings Updated"
   		redirect_to milkrun_path(@milkrun)
   	else
   		render 'edit'
   	end
   end
-
 
 	def destroy
 		@milkrun = Milkrun.find(params[:id])

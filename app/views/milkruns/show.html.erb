@@ -1,11 +1,24 @@
-<h3><div class="label label-default"><%= @milkrun.date.strftime("%B %d, %Y").upcase %></div>
+<h3><div id="milkdate" class="label label-default"><%= @milkrun.date.strftime("%B %d, %Y").upcase %></div>
+
+<div class="runtotals" class="btn btn-default">
+	TO DRIVER
+	<div class="label label-warning"><%= price(@milkrun.total_trip_cost.floor) %></div>
+</div>
+<div class="runtotals" class="btn btn-default">
+	TO FARM
+	<div class="label label-warning"><%= price(@milkrun.order_total) %></div>
+</div>
 
 <div class="newbutton">	
   <%= link_to "NEW ORDER", new_milkrun_order_path(@milkrun.id), class: "btn btn-primary" %>
   <%= link_to "SETTINGS", edit_milkrun_path(@milkrun), class: "btn btn-default" %>
 </div>
 </h3>
+
+
+
 </br>
+
 <div class="span8">
 <table class="table table-condensed">
   <thead>
@@ -16,14 +29,13 @@
       <th>MILK</th>
       <th>BUTTER</th>
       <th>CREAM</th>
+      <th>GALLONS</th>
       <th>ORDER COST</th>
 
-      <th>PER GALLON</th>
-      <th>PPG</th>
-
-      <th>TRIP COST</th>
       <th>CAPPED</th>
-      <th>CAP PPG</th>
+      <th>NORMAL</th>
+      <th>PPG</th>
+      <th>AMOUNT DUE</th>
 
       <th></th>
       <th></th>
@@ -36,57 +48,45 @@
 	    <% sorted.each do |ord| %>
 	    <tr>
 	    	<% if ord.driver? %>
-	      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
-	      <td>...</td>
+		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+		      <td><span class="label label-success"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
 	    	<% else %>
-	      <td></td>
-	      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+	  	    <td></td>
+	    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
 	    	<% end %>
 
 	      <td class="number"><%= ord.milk %></td>
 	      <td class="number"><%= ord.buttermilk %></td>
 	      <td class="number"><%= ord.cream %></td>
+	      <td class="number"><%= ord.gallons %></td>
 	      <td class="number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
 
-	      <% if ord.driver? %>
-	      <td class="number">-</td>
-	      <td class="number">-</td>
-	      <td class="number">-</td>
-	      <td class="number">-</td>
-	      <td class="number">-</td>
+      	<% if ord.under == true %>
+		      <td class="number"><%= price(ord.capped) %></td>
+		      <td class="number">-</td>
 	      <% else %>
-	      <td class="number"><span class="dollar">$</span><%= price(ord.pergallon) %></td>
-
-	      <% if ord.ppg > 1 %>
-	      <td class="number"><span class="label label-danger"><%= ord.ppg %></span></td>
-	      <% else %>
-	      <td class="number"><span class="label label-success"><%= ord.ppg %></span></td>
-	      <% end %>
-
-	      <td class="number"><span class="dollar">$</span><%= price(ord.trip_cost) %></td>
-
-	      <td class="number"><%= ord.capped %></td>
+		      <td class="number">-</td>
+		      <td class="number"><%= price(ord.capped) %></td>
+		    <% end %>
 
       	<% if ord.under == true %>
-	      <td class="number"><span class="label label-success"><%= ord.capped_ppg %></span></td>
+		      <td class="number"><span class="label label-info"><%= ord.capped_ppg %></span></td>
+	      <% elsif ord.capped_ppg > 1 %>
+		      <td class="number"><span class="label label-danger"><%= ord.capped_ppg %></span></td>
 	      <% else %>
-	      <td class="number"><span class="label label-info"><%= ord.capped_ppg %></span></td>
+	  	    <td class="number"><span class="label label-default"><%= ord.capped_ppg %></span></td>
 	      <% end %>
 
-	      <% end %>
+	      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
 
-	      <td class="number">
-	      <div class="icon_edit">
-	      	<%= link_to image_tag("icon_edit.png"), edit_order_path(ord) %>
-		      </div>
+	      <td class="button">
+	      <div class="btn-group btn-group-xs">
+	      	<%= link_to image_tag("icon_edit.png"), edit_order_path(ord), class: "btn btn-default icon" %>
+	      	<%= link_to image_tag("icon_delete2.png"), ord, class: "btn btn-warning icon", method: :delete,
+		             data: { confirm: "Do you really want to delete this Order?" } %>
+	      </div>
         </td>
 
-	      <td class="number">
-	      <div class="icon">
-	      	<%= link_to image_tag("icon_delete.png"), ord, method: :delete,
-	             data: { confirm: "Do you really want to delete this Order?" } %>
-		      </div>
-        </td>
 	    </tr>
     	<% end %>
   	</tbody>
@@ -98,15 +98,13 @@
 	      <td class="number"><%= x.m_orders %></td>
 	      <td class="number"><%= x.b_orders %></td>
 	      <td class="number"><%= x.c_orders %></td>
+	      <td class="number"><%= x.order_count %></td>
 
 	      <td class="number"><span class="dollar">$</span><%= price(x.order_total) %></td>
-	      <td class="number"><span class="dollar">$</span><%= price(x.total_unit_cost) %></td>
 	      <td class="number">-</td>
-	      <td class="number"><span class="dollar">$</span><%= price(x.total_trip_cost) %></td>
+	      <td class="number">-</td>
 	      <td class="number"><span class="dollar">$</span><%= price(x.total_capped_cost) %></td>
-	      <td class="number">-</td>
-
-	    	<td></td>
+	      <td class="number"><span class="dollar">$</span><%= price(x.total_due) %></td>
 
 	    	<% if x.diff <= 0 %>
 	      <td class="number"><span class="label label-danger"><%= price(x.diff) %></span></td>

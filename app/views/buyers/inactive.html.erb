@@ -1,0 +1,34 @@
+<h3>
+  <div class="btn-group">
+    <%= link_to "ACTIVE FAMILIES", active_buyers_path, class: "btn btn-default" %>
+    <%= link_to "INACTIVE FAMILIES", inactive_buyers_path, class: "btn btn-warning" %>
+  </div>
+
+  <span class="newbutton"><%= link_to "New Family", new_buyer_path, class: "btn btn-default" %></span>
+</h3>
+</br>
+<div class="span8">
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>NOTES</th>
+      <th>NAME</th>
+      <th>EMAIL</th>
+      <th>PHONE</th>
+      <th>ALTERNATE</th>
+      <th>BALANCE</th>
+      <th>DEPOSIT</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <% if !Buyer.inactive.nil? %>
+    <%= render "buyers/inactive" %>
+  <% else %>
+    <tbody>
+    </tbody>
+  <% end %>
+
+</table>
+</div>

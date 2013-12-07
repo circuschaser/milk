@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 	def create
 		@milkrun = Milkrun.find(params[:milkrun_id])
 		@order = @milkrun.orders.create(params[:order])
-
+		@order.update_attribute(:date, @milkrun.date)
 		if @order.save
 			redirect_to milkrun_path(@milkrun)
 		else
@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
 	def update
 		@order = Order.find(params[:id])
 		if @order.update_attributes(params[:order])
+			@order.save
       flash[:success] = "The Order was successfully updated"
       redirect_to milkrun_path(@order.milkrun)
     else

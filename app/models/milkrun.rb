@@ -45,7 +45,7 @@ class Milkrun < ActiveRecord::Base
 
   def gas
   	x = distance / mpg * gasprice
-    ( x * 2 ).round / 2.0
+    ( x * 2 ).round(2) / 2.0
   end
 
 
@@ -84,7 +84,7 @@ class Milkrun < ActiveRecord::Base
   def total_unit_cost
     t = 0
     orders.each do |i|
-      t += i.pergallon
+      t += i.gallons
     end
     t
   end
@@ -105,6 +105,14 @@ class Milkrun < ActiveRecord::Base
     t = 0
     orders.each do |i|
       t += i.capped
+    end
+    t
+  end
+
+  def total_due
+    t = 0
+    orders.each do |i|
+      t += i.amount_due
     end
     t
   end
