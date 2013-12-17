@@ -59,6 +59,10 @@ class MilkrunsController < ApplicationController
 		@milkrun = Milkrun.find(params[:id])
 	end
 
+	def instructions
+		@milkrun = Milkrun.find(params[:id])
+	end
+
 	def update
 		@milkrun = Milkrun.find(params[:id])
 		if @milkrun.update_attributes(params[:milkrun])

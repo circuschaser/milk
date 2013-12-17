@@ -37,10 +37,82 @@
   content: ""; // Kills the expanded links on anchor tags
   }
 
+  /* DIRECTIONS                                               */
+
+  #directions {
+    font-size: 12px;      
+    /*border: 1px solid $grayBorder;*/
+    padding: 2px 12px 12px 12px;
+    span {
+      font-weight: bold;
+    }
+    span.label {
+      padding-top: 6px;
+    }
+  }
+
+  .large-bold {
+    clear: both;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 6px;
+  }
+
+  .address {
+    margin-bottom: 6px;
+  }
+
+  .need {
+    border: 1px solid $grayBorder;
+    margin: 6px 0;
+    padding: 4px 4px;
+    p {
+      margin: 4px 0 4px 0;
+      font-weight: normal;
+    }
+  }
+
+  span.left,
+  span.right {
+    /*display: inline;*/
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  span.left {
+    float: left;
+    margin: 0 80px 0 0;
+  }
+
+  .blue,
+  .orange {
+    padding: 2px 4px 1px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+
+  .blue {
+    border: 3px solid DeepSkyBlue;
+  }
+
+  .orange {
+    border: 3px solid Orange;
+  }
+
+  .contact {
+    float: right;
+    border: 3px solid DeepSkyBlue;    
+    border-radius: 3px;
+    padding: 8px 12px 2px 8px;
+    margin-top: 12px;
+    font-size: 14px;
+    text-align: right;    
+  }
+
 /* MAIN                                               */
 
   body {
-      padding-top: 30px;
       font-family: helvetica, sans-serif;
       font-size: 10px;
   }
@@ -153,8 +225,9 @@
     border-radius: 10px;
     height: 240px;
     width: 23%;
-    margin: 12px 10px 18px 0;
+    margin: 12px 6px 18px 0;
     padding-left: 12px;
+    padding-right: 8px;
     display: inline-block;
     vertical-align: top;
     .name {
@@ -514,7 +587,7 @@
     width: 40px;
     margin-top: 0;
     margin-bottom: 4px;
-    border: 1px solid gray;
+    border: 1px solid $grayBorder;
   }
 
   #icon_edit_sm {

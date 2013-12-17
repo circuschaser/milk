@@ -1,7 +1,7 @@
 <p id="instructions" class="noprint">
 	<span class="label label-info">PICKUP</span> PRINT INSTRUCTIONS: In Firefox, go to <span>File > Page Setup</span> </br>
 	Check to see that <span class="label label-danger">LANDSCAPE LAYOUT</span> is active. It probably looks like this:  <%= image_tag("landscape.png") %></br>
-	Click <span>OK</span> and hit <span>&#8984; + P</span>, then <span>Save-As-PDF</span>.
+	Click <span>OK</span> and hit <span>&#8984; + P</span> to print, or click here  <%=link_to_function(image_tag("icon_print.png"), "javascript:print()", class: "btn btn-default", id: "icon_print") %>
 </p>
 
 <h3>
@@ -33,11 +33,11 @@
 <% end %>
 </div>
 
-<div class="btn-group newbutton noprint">	
-  <%= link_to "PRINT ARCHIVE", p_archive_milkrun_path, class: "btn btn-default" %>
-  <%= link_to "PRINT PICKUP", p_pickup_milkrun_path, class: "btn btn-primary" %>
-  <%=link_to_function(image_tag("icon_print.png"), "javascript:print()", class: "btn btn-default", id: "icon_print") %>
-</div>
+	<div class="btn-group newbutton noprint">	
+	  <%= link_to "ARCHIVE", p_archive_milkrun_path, class: "btn btn-default" %>
+	  <%= link_to "PICKUP", p_pickup_milkrun_path, class: "btn btn-primary" %>
+	  <%= link_to "INSTRUCTIONS", instructions_milkrun_path, class: "btn btn-default" %>
+	</div>
 </h3>
 
 </br>

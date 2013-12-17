@@ -1,0 +1,132 @@
+<% x = @milkrun %>
+<p id="instructions" class="noprint">
+	<span class="label label-warning">ARCHIVE</span>	PRINT INSTRUCTIONS: In Firefox, go to <span>File > Page Setup</span> </br>
+	Check to see that <span class="label label-danger">PORTRAIT LAYOUT</span> is active. It probably looks like this:  <%= image_tag("portrait.png") %></br>
+	Click <span>OK</span> and hit <span>&#8984; + P</span> to print, or click here  <%=link_to_function(image_tag("icon_print.png"), "javascript:print()", class: "btn btn-default", id: "icon_print") %>
+</p>
+
+<h3>
+	<div id="milkdate" class="noprint label label-default">
+		<%= link_to @milkrun.date.strftime("%B %d, %Y").upcase, milkrun_path(@milkrun) %>
+	</div>
+	<div class="btn-group newbutton noprint">	
+	  <%= link_to "ARCHIVE", p_archive_milkrun_path, class: "btn btn-default" %>
+	  <%= link_to "PICKUP", p_pickup_milkrun_path, class: "btn btn-default" %>
+	  <%= link_to "INSTRUCTIONS", instructions_milkrun_path, class: "btn btn-primary" %>
+	</div>
+</h3>
+
+<div id="directions">
+	<div class="address large-bold">MILKY WAY DAIRY - 220 Hidden Hills Road, Starr, SC 29684</div>
+<p>
+	Drive North on I-85 until exit <span>#160 for GA-51 toward Elberton/Royston 21</span>
+	</br>				
+	Turn RIGHT onto <span>GA-51 N E/Sandy Cross Rd.</span>
+	</br>	
+	Turn RIGHT onto <span>GA-145 S/Royston Rd</span>. Continue on <span>145</span> about <span>2 mins</span>								
+	</br>
+	Turn LEFT onto <span>GA-8 E/US-29 N/W Main St</span>. Continue on Main for <span>2.7 miles.</span>
+	</br>
+	If you get to <span>Ty Cobb St.</span>, you’ve passed it.
+</p>									
+							
+<p>			
+	<span>STOP at the ice machine in Royston.</span> The ice machine is on your LEFT in front of <span>Southern Self Storage (blue bldg)</span>
+	</br>
+</p>
+
+<div class="need">
+	<span class="left">
+		<p>Get <span class="blue"><%= pluralize(x.ice, "bag") %></span> of ice</p>
+	</span>
+	<span class="right">
+		<p>you will need <span class="orange"><%= x.ice_cost %></span> in cash ($1 bills are easiest)</p>
+	</span>
+	</p>
+</div>
+
+<div class="large-bold"></div>
+
+<p>
+	Back to Main St, turn <span>LEFT on GA-8 E/US-29 N/W</span> Main St and continue for about <span>15 min. (12.2 miles)</span>										
+	</br>
+	Turn RIGHT on <span>E. Howell St.</span> and continue <span>LEFT</span> at the fork.
+	</br>
+	The road then <span>curves RIGHT</span> and becomes <span>GA-8 E/US-29 N/E Franklin St.</span> Continue for about 7 min.
+	</br>
+	Just past Lake Hartwell on LEFT, take a RIGHT on <span>Hwy 181</span> and continue for about 6 miles.
+	</br>
+	Hwy 187 will join 181 for less than a mile, then turns LEFT. Turn LEFT onto <span>HWY 187.</span>
+	</br>
+	Stay on Hwy 187 for almost <span>2 miles</span>, then turn RIGHT at the fork onto <span>Smith Rd.</span>
+	</br>
+	Take the first LEFT on <span>Hidden Hills Road</span>.
+	</br>
+	You will see 2 silos in the distance - these are at <span>Milky Way Dairy</span>.
+</p>
+
+<div class="need">
+	<span class="large-bold">
+		Milk will probably be on the truck.</span> Put milk in cooler first, then put ice on top of milk.
+</div>
+
+<div class="need">
+	<span class="left">
+		<p><span class="blue"><%= pluralize(x.m_orders, "gallon") %></span> milk</p>
+		<p><span class="blue"><%= pluralize(x.b_orders, "gallon") unless x.b_orders.nil? %></span> buttermilk</p>							
+		<p><span class="blue"><%= pluralize(x.c_orders, "gallon") unless x.c_orders.nil? %></span> cream</p>
+	</span>
+	<span class="right">
+		<p><span>24</span> milk in extra large cooler + 2 bags ice</p>
+		<p><span>20</span> milk in large coolers + 2 bags ice (per each)</p>									
+		<p><span>3</span> milk in small coolers + 1/2 bag ice</p>
+	</span>
+</div>
+
+<div class="address large-bold">
+	DIRECTIONS FROM MILKY WAY DAIRY back to Beth's house
+</div>
+<div class="contact"> 
+	<p>Beth's number: <span>404-452-1161</span></p>
+	<p>Rob's number: <span>404-422-3210</span></p>
+</div>	
+
+<p>
+	From the Dairy, turn RIGHT on <span>Smith Road</span>.
+	</br>
+	Go straight on <span>HWY 187</span>, turn RIGHT on <span>181</span>.										
+	</br>
+	Turn LEFT on <span>HWY 29</span> (south-west)										
+	</br>
+	Keep STRAIGHT onto <span>SR 51 / SR 77 / SR 366</span>.										
+	</br>
+	Take <span>SR 51/77/366</span> to I-85.										
+	</br>
+	Turn LEFT onto <span>I-85 South</span>.										
+	Continue on I-85 S to <span>exit 115 – Hwy 20/Buford Drive NE</span>.										
+	</br>
+	Turn RIGHT on <span>Hwy 20</span>.  										
+</p>
+
+<p>
+	<span>Please call when you exit I-85 onto Hwy 20 – you are about 1 hour from my house.</span>
+	</br>
+	(you don't have to return via Hwy 20, but if you use a preferred route, still call when you're about 1 hour out.)
+</p>
+<p>
+	Take <span>Hwy 20</span> about 30 miles to <span>E. Cherokee Drive</span>. There is a Kroger on the corner on the LEFT.
+	</br>
+	Turn LEFT on <span>E. Cherokee Drive</span>.
+	</br>
+	Go about 8 miles (through light at Hwy 140) and turn RIGHT on <span>Hickory Rd</span>.
+	</br>
+	Continue to the second light (2.7 mi.) and turn LEFT onto <span>New Light Rd</span>.
+	</br>
+	Take a RIGHT onto <span>Toonigh Rd</span>.										
+	</br>
+	At the <span>third stop sign</span>, turn RIGHT onto <span>Old Magnolia Trail</span> (1.7 mi.).
+	</br>
+	Take the first road to the RIGHT, <span>Magnolia Springs Lane</span> (.5 mi.), then RIGHT at the stop sign.
+	</br>
+	We are the second house on the LEFT, <span>206 Magnolia Springs Dr</span>.		
+</p>

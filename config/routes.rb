@@ -37,6 +37,7 @@ Milk::Application.routes.draw do
     member do
       get :p_archive
       get :p_pickup
+      get :instructions
       get :orders
     end
   end
