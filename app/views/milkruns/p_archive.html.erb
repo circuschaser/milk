@@ -1,0 +1,244 @@
+<p id="instructions" class="noprint">
+	<span class="label label-warning">ARCHIVE</span>	PRINT INSTRUCTIONS: In Firefox, go to <span>File > Page Setup</span> </br>
+	Check to see that <span class="label label-danger">PORTRAIT LAYOUT</span> is active. It probably looks like this:  <%= image_tag("portrait.png") %></br>
+	Click <span>OK</span> and hit <span>&#8984; + P</span>, then <span>Save-As-PDF</span>.
+</p>
+
+<h3>
+	<div id="milkdate" class="label label-default">
+		<%= link_to @milkrun.date.strftime("%B %d, %Y").upcase, milkrun_path(@milkrun) %>
+	</div>
+
+
+<div class="runtotals" class="btn btn-default">
+	TO DRIVER
+	<div class="label label-warning"><%= price(@milkrun.total_trip_cost.floor) %></div>
+</div>
+<div class="runtotals" class="btn btn-default">
+	TO FARM
+	<div class="label label-warning"><%= price(@milkrun.order_total) %></div>
+</div>
+
+
+<% x = @milkrun %>
+<div class="noprint diff">
+<% if x.diff <= 0 %>
+<div class="runtotals btn btn-default">
+	<div class="label label-danger"><%= price(x.diff) %></div>
+</div>
+<% else %>
+<div class="runtotals btn btn-default">
+	<div class="label label-success"><%= price(x.diff) %></div>
+</div>
+<% end %>
+</div>
+
+<div class="btn-group newbutton noprint">	
+  <%= link_to "PRINT ARCHIVE", p_archive_milkrun_path, class: "btn btn-primary" %>
+  <%= link_to "PRINT PICKUP", p_pickup_milkrun_path, class: "btn btn-default" %>
+  <%=link_to_function(image_tag("icon_print.png"), "javascript:print()", class: "btn btn-default", id: "icon_print") %>
+</div>
+</h3>
+
+</br>
+
+<div class="span8">
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>DRIVER</th>
+      <th>NAME</th>
+
+
+
+      <th>MILK</th>
+      <th>BUTTER</th>
+      <th>CREAM</th>
+      <th>GALLONS</th>
+      <th>ORDER COST</th>
+
+      <th>CAPPED</th>
+      <th>NORMAL</th>
+      <th>AMOUNT DUE</th>
+
+    </tr>
+  </thead>
+
+  <% if !@milkrun.orders.nil? %>
+	  <tbody>
+	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
+	    <% sorted.each do |ord| %>
+	    <tr>
+	    	<!-- DRIVER -->
+	    	<% if ord.driver? %>
+		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+		      <td><span class="label label-success noprint"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
+	    	<% else %>
+	    	<!-- NON DRIVER -->
+	  	    <td></td>
+	    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+	    	<% end %>
+
+
+
+
+
+	    	<!-- MILK GALLONS -->
+	      <td class="number"><%= ord.milk %></td>
+
+	    	<!-- BUTTERMILK GALLONS -->
+	      <td class="number"><%= ord.buttermilk %></td>
+
+	    	<!-- CREAM GALLONS -->
+	      <td class="number"><%= ord.cream %></td>
+
+	    	<!-- TOTAL GALLON COUNT -->
+	      <td class="number"><%= ord.gallons %></td>
+
+	    	<!-- ORDER COST -->
+	      <td class="number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
+
+	      <!-- TRIP COST -->
+      	<% if ord.under == true %>
+		      <td class="number"><%= price(ord.capped) %></td>
+		      <td class="number">-</td>
+	      <% else %>
+		      <td class="number">-</td>
+		      <td class="number"><%= price(ord.capped) %></td>
+		    <% end %>
+
+	      <!-- TOTAL COST -->
+	      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
+
+	    </tr>
+    	<% end %>
+  	</tbody>
+	  <tbody>
+	    <tr class="milkrun_totals">
+
+        <!-- INTENTIONALLY BLANK -->
+	    	<td></td>
+        <td></td>
+        <!--  -->
+
+	      <td class="number"><%= x.m_orders %></td>
+	      <td class="number"><%= x.b_orders %></td>
+	      <td class="number"><%= x.c_orders %></td>
+	      <td class="number"><%= x.order_count %></td>
+
+	      <td class="number"><span class="dollar">$</span><%= price(x.order_total) %></td>
+	      <td class="number">-</td>
+	      <td class="number">-</td>
+	      <td class="number"><span class="dollar">$</span><%= price(x.total_due) %></td>
+
+	    </tr>
+  	</tbody>
+  <% else %>
+	  <tbody>
+	  </tbody>
+  <% end %>
+
+</table>
+</div>
+
+<div class="noscreen">
+
+	<div id="trip">
+		<div class="name">TRIP VARIABLES</div>
+		<table>	
+			<tr class="data">
+				<td class="datname">Gas Price</td>
+				<td class="fifty btn btn-default"><%= x.gasprice %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Distance</td>
+				<td class="fifty btn btn-default"><%= x.distance %></td>
+			</tr>
+				
+			<tr class="data">
+				<td class="datname">Vehicle MPG</td>
+				<td class="fifty btn btn-default"><%= x.mpg %></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="milk">
+		<div class="name">PRICE PER UNIT</div>
+		<table>
+			<tr class="data">
+				<td class="datname">Milk</td>
+				<td class="fifty btn btn-default"><%= x.mprice %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Buttermilk</td>
+				<td class="fifty btn btn-default"><%= x.bprice %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Cream</td>
+				<td class="fifty btn btn-default"><%= x.cprice %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Ice Bag</td>
+				<td class="fifty btn btn-default"><%= x.iceprice %></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="coolers">
+		<div class="name">GALLONS IN EACH</div>
+		<table>
+
+			<tr class="data">
+				<td class="datname">LG Cooler</td>
+				<td class="fifty btn btn-default"><%= x.cool1 %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Cooler 2</td>
+				<td class="fifty btn btn-default"><%= x.cool2 %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Cooler 3</td>
+				<td class="fifty btn btn-default"><%= x.cool3 %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Freezer Bag</td>
+				<td class="fifty btn btn-default"><%= x.bag %></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="ice">
+		<div class="name">ICE BAGS IN EACH</div>
+		<table>
+
+			<tr class="data">
+				<td class="datname">LG Cooler</td>
+				<td class="fifty btn btn-default"><%= x.cool1_ice %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Cooler 2</td>
+				<td class="fifty btn btn-default"><%= x.cool2_ice %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Cooler 3</td>
+				<td class="fifty btn btn-default"><%= x.cool3_ice %></td>
+			</tr>
+
+			<tr class="data">
+				<td class="datname">Freezer Bag</td>
+				<td class="fifty btn btn-default"><%= x.bag_ice %></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+

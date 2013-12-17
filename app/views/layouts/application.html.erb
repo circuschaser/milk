@@ -4,7 +4,8 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title><%= content_for?(:title) ? yield(:title) : "Milk" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Milk" %>">
-    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= stylesheet_link_tag "bootstrap_and_overrides", media: "screen" %>
+    <%= stylesheet_link_tag "print", media: "print" %>
 
     <%= javascript_include_tag 'jquery-1.9.1.js' %>
     <%= javascript_include_tag 'jquery-ui-1.10.3.custom.min' %>
@@ -17,7 +18,7 @@
   </head>
   <body>
     <%# application layout styled for Twitter Bootstrap 3.0 %>
-    <header>
+    <header class="noprint">
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">

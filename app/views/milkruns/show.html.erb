@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 <h3><div id="milkdate" class="label label-default"><%= @milkrun.date.strftime("%B %d, %Y").upcase %></div>
 
 <div class="runtotals" class="btn btn-default">
@@ -9,9 +16,21 @@
 	<div class="label label-warning"><%= price(@milkrun.order_total) %></div>
 </div>
 
-<div class="btn-group newbutton">	
+<% x = @milkrun %>
+<% if x.diff <= 0 %>
+<div class="noprint runtotals btn btn-default">
+	<div class="label label-danger"><%= price(x.diff) %></div>
+</div>
+<% else %>
+<div class="noprint runtotals btn btn-default">
+	<div class="label label-success"><%= price(x.diff) %></div>
+</div>
+<% end %>
+
+<div class="noprint btn-group newbutton">	
   <%= link_to "NEW ORDER", new_milkrun_order_path(@milkrun.id), class: "btn btn-primary" %>
   <%= link_to "SETTINGS", edit_milkrun_path(@milkrun), class: "btn btn-default" %>
+  <%= link_to image_tag("icon_print.png"), p_archive_milkrun_path, class: "btn btn-default", id: "icon_print" %>
 </div>
 </h3>
 
@@ -25,7 +44,7 @@
     <tr>
       <th>DRIVER</th>
       <th>NAME</th>
-      <th></th>
+      <th class="noprint"></th>
 
       <th>MILK</th>
       <th>BUTTER</th>
@@ -38,7 +57,6 @@
       <th>PPG</th>
       <th>AMOUNT DUE</th>
 
-      <th></th>
     </tr>
   </thead>
 
@@ -50,7 +68,7 @@
 	    	<!-- DRIVER -->
 	    	<% if ord.driver? %>
 		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
-		      <td><span class="label label-success"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
+		      <td><span class="label label-success noprint"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
 	    	<% else %>
 	    	<!-- NON DRIVER -->
 	  	    <td></td>
@@ -58,7 +76,7 @@
 	    	<% end %>
 
 	      <!-- BUTTONS -->
-	      <td class="button">
+	      <td class="button noprint">
 		      <div class="btn-group btn-group-xs">
 		      	<!-- PAY BUYER -->
 		      	<% if ord.driver? %>
@@ -98,7 +116,6 @@
 		      <td class="number"><%= price(ord.capped) %></td>
 		    <% end %>
 
-
 		    <!-- PER GALLON COST -->
       	<% if ord.under == true %>
 		      <td class="number"><span class="label label-info"><%= ord.capped_ppg %></span></td>
@@ -115,7 +132,6 @@
     	<% end %>
   	</tbody>
 	  <tbody>
-	  	<% x = @milkrun %>
 	    <tr class="milkrun_totals">
 
         <!-- INTENTIONALLY BLANK -->
@@ -134,12 +150,6 @@
 	      <td class="number">-</td>
 	      <td class="number"><span class="dollar">$</span><%= price(x.total_capped_cost) %></td>
 	      <td class="number"><span class="dollar">$</span><%= price(x.total_due) %></td>
-
-	    	<% if x.diff <= 0 %>
-	      <td class="number"><span class="label label-danger"><%= price(x.diff) %></span></td>
-	      <% else %>
-	      <td class="number"><span class="label label-success"><%= price(x.diff) %></span></td>
-	      <% end %>
 
 	    </tr>
   	</tbody>

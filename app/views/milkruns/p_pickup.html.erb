@@ -1,0 +1,145 @@
+<p id="instructions" class="noprint">
+	<span class="label label-info">PICKUP</span> PRINT INSTRUCTIONS: In Firefox, go to <span>File > Page Setup</span> </br>
+	Check to see that <span class="label label-danger">LANDSCAPE LAYOUT</span> is active. It probably looks like this:  <%= image_tag("landscape.png") %></br>
+	Click <span>OK</span> and hit <span>&#8984; + P</span>, then <span>Save-As-PDF</span>.
+</p>
+
+<h3>
+	<div id="milkdate" class="label label-default">
+		<%= link_to @milkrun.date.strftime("%B %d, %Y").upcase, milkrun_path(@milkrun) %>
+	</div>
+
+<div class="noprint diff">
+	<div class="noprint runtotals btn btn-default">
+		TO DRIVER
+		<div class="label label-warning"><%= price(@milkrun.total_trip_cost.floor) %></div>
+	</div>
+	<div class="noprint runtotals btn btn-default">
+		TO FARM
+		<div class="label label-warning"><%= price(@milkrun.order_total) %></div>
+	</div>
+</div>
+
+<% x = @milkrun %>
+<div class="noprint diff">
+<% if x.diff <= 0 %>
+<div class="runtotals btn btn-default">
+	<div class="label label-danger"><%= price(x.diff) %></div>
+</div>
+<% else %>
+<div class="runtotals btn btn-default">
+	<div class="label label-success"><%= price(x.diff) %></div>
+</div>
+<% end %>
+</div>
+
+<div class="btn-group newbutton noprint">	
+  <%= link_to "PRINT ARCHIVE", p_archive_milkrun_path, class: "btn btn-default" %>
+  <%= link_to "PRINT PICKUP", p_pickup_milkrun_path, class: "btn btn-primary" %>
+  <%=link_to_function(image_tag("icon_print.png"), "javascript:print()", class: "btn btn-default", id: "icon_print") %>
+</div>
+</h3>
+
+</br>
+
+<div class="span8">
+<table class="table table-condensed fourteen">
+  <thead>
+    <tr>
+      <th>DRIVER</th>
+      <th>NAME</th>
+
+      <th class="noscreen">GOT MILK</th>
+
+      <th>MILK</th>
+      <th>BUTTER</th>
+      <th>CREAM</th>
+      <th>GALLONS</th>
+      <th class="noprint">ORDER COST</th>
+
+      <th class="noprint">CAPPED</th>
+      <th class="noprint">NORMAL</th>
+      <th>AMOUNT DUE</th>
+
+    </tr>
+  </thead>
+
+  <% if !@milkrun.orders.nil? %>
+	  <tbody>
+	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
+	    <% sorted.each do |ord| %>
+	    <tr>
+	    	<!-- DRIVER -->
+	    	<% if ord.driver? %>
+		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+		      <td><span class="label label-success noprint"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
+	    	<% else %>
+	    	<!-- NON DRIVER -->
+	  	    <td></td>
+	    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+	    	<% end %>
+
+	    	<!-- GOT MILK -->
+	    	<td class="noscreen number box icon_view2"><%= image_tag("icon_view2.png") %></td>
+
+	    	<!-- MILK GALLONS -->
+	      <td class="number"><%= ord.milk %></td>
+
+	    	<!-- BUTTERMILK GALLONS -->
+	      <td class="number"><%= ord.buttermilk %></td>
+
+	    	<!-- CREAM GALLONS -->
+	      <td class="number"><%= ord.cream %></td>
+
+	    	<!-- TOTAL GALLON COUNT -->
+	      <td class="number"><%= ord.gallons %></td>
+
+	    	<!-- ORDER COST -->
+	      <td class="noprint number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
+
+	      <!-- TRIP COST -->
+      	<% if ord.under == true %>
+		      <td class="noprint number"><%= price(ord.capped) %></td>
+		      <td class="noprint number">-</td>
+	      <% else %>
+		      <td class="noprint number">-</td>
+		      <td class="noprint number"><%= price(ord.capped) %></td>
+		    <% end %>
+
+	      <!-- TOTAL COST -->
+	      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
+
+	    </tr>
+    	<% end %>
+  	</tbody>
+	  <tbody>
+	    <tr class="milkrun_totals">
+
+        <!-- INTENTIONALLY BLANK -->
+	    	<td class="noscreen"></td>
+        <td></td>
+        <td></td>
+        <!--  -->
+
+	      <td class="number"><%= x.m_orders %></td>
+	      <td class="number"><%= x.b_orders %></td>
+	      <td class="number"><%= x.c_orders %></td>
+	      <td class="number"><%= x.order_count %></td>
+
+	      <td class="noprint number"><span class="dollar">$</span><%= price(x.order_total) %></td>
+	      <td class="noprint number">-</td>
+	      <td class="noprint number">-</td>
+	      <td class="noprint number"><span class="dollar">$</span><%= price(x.total_due) %></td>
+
+	    </tr>
+  	</tbody>
+  <% else %>
+	  <tbody>
+	  </tbody>
+  <% end %>
+
+</table>
+</div>
+
+
+

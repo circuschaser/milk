@@ -12,11 +12,11 @@
   <thead>
     <tr>
       <th>NAME</th>
+      <th></th>
       <th>EMAIL</th>
       <th>PHONE</th>
       <th>ALTERNATE PHONE</th>
       <th>BALANCE</th>
-      <th></th>
     </tr>
   </thead>
   
@@ -32,7 +32,7 @@
             <%= link_to image_tag("icon_unarc.png"), deactivate_buyer_path(b) %>
           </div>
         </td>
-        
+
         <td><%= b.email %></td>
         <td><%= b.phone %></td>
         <td><%= b.altphone %></td>

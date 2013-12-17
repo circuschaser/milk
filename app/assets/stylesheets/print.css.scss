@@ -13,25 +13,40 @@
   $grayBorder:  #ddd;
   $darkGray:    #959186;
 
-/* MAIN                                               */
-
-  .noscreen,
-  .noscreen * {
+  .noprint,
+  .noprint * {
     display: none;
   }
 
-  #milkdate a {
-    color: white;
+  .fourteen {
+    font-size: 14px;
   }
+
+  .name,
+  #milkdate {
+    /*text-indent: -53px;*/
+    /*padding-left: 53px;*/
+    & a {
+      &:after {
+      content: none;
+      }
+    }
+  }
+
+  a[href^="#"]:after {
+  content: ""; // Kills the expanded links on anchor tags
+  }
+
+/* MAIN                                               */
 
   body {
       padding-top: 30px;
-      background: linear-gradient(to bottom, white, $liteBlue 90%) fixed;
       font-family: helvetica, sans-serif;
+      font-size: 10px;
   }
 
   p {
-  	padding-left: 6px;
+    padding-left: 6px;
   }
 
   h3 span {
@@ -51,18 +66,18 @@
     }
 
   .navbar-collapse {
-  	padding-left: 0;
+    padding-left: 0;
     padding-right: 0;
-  	li {
+    li {
       float: right;
-  	}
+    }
   }
 
   thead {
       padding-top: 100px;
     th {
       text-align: center;
-      font-size: 12px;
+      font-size: 9px;
       color: $darkGray;
     }
   }
@@ -94,11 +109,6 @@
     color: white;
   }
 
-  .print,
-  .print * {
-    display: none;
-  }
-
 /* MILKRUN INDEX                                            */
 
   .milkrun_totals {
@@ -112,7 +122,7 @@
   .runtotals {
     display: inline;
     margin-left: 3px;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     /*border-radius: 5px;*/
     padding: 8px 8px 6px 8px;
     font-size: 12px;
@@ -129,29 +139,11 @@
     }
   }
 
-  .diff {
-    display: inline;
-  }
-
-  .table > tbody > tr > td.x-button {
-    color: white;
+  .box {
+    background: white;
   }
 
 /* MILKRUN FORM                                             */
-
-  .settings_date {
-    display: inline;
-    margin-left: 3px;
-    border: 1px solid #ddd;
-    /*border-radius: 5px;*/
-    padding: 8px 8px 6px 8px;
-    font-size: 16px;
-    font-weight: normal;
-  }  
-
-  #date {
-    margin: 18px 0 18px 3px;
-  }
 
   #trip,
   #milk,
@@ -159,50 +151,23 @@
   #ice {
     border: 2px solid #ddd;
     border-radius: 10px;
-    height: 210px;
-    width: 18%;
+    height: 240px;
+    width: 23%;
     margin: 12px 10px 18px 0;
     padding-left: 12px;
     display: inline-block;
     vertical-align: top;
-    color: transparent;
-    font-size: 12px;
-    font-weight: normal;
-    span.name {
+    .name {
       color: gray;
-      margin: 0 0 42px 30px;
-    }
-    span.label {
-      /*float: right;*/
-      color: gray;
-      /*display: inline;*/
-      font-size: 12px;
-      margin-top: -12px;
-      text-align: left;
-    }
-    .control-group {
-      /*position: relative;*/
-      /*width: 50%;*/
-      height: auto;
-      /*border: 1px dotted red;*/
-      margin: 18px 0 24px 0;
-    }
-    .controls {
-      /*width: 100%;*/
-    }
-    input {
-      height: auto;
-      float: left;
-      width: 50px;
-      padding-left: 6px;
+      margin: 0 0 8px 30px;
     }
   }
 
   .data {
     height: 10px;    
     td.datname {
-      width: 60%;
-      padding-right: 24px;
+      width: 65%;
+      padding-right: 20px;
       font-size: 11px;
       text-align: right;
     }
@@ -214,14 +179,6 @@
 
   #instructions {
     font-size: 14px;
-    border: 1px solid gray;
-    padding: 12px 12px 12px 12px;
-    span {
-      font-weight: bold;
-    }
-    span.label {
-      padding-top: 6px;
-    }
   }
 
 /* NEW ORDER FORM                                             */
@@ -511,7 +468,9 @@
   }
 
   .table {
-    tr:nth-child(even) { background-color:$navGray; }
+    tr {
+      border-top: 1px solid $grayBorder;
+    }
   }
 
   .table > tbody > tr > td {
@@ -549,6 +508,15 @@
     margin-bottom: 1px;
   }
 
+  .icon_view2 img {
+    /*width: 14px;*/
+    height: 20px;
+    width: 40px;
+    margin-top: 0;
+    margin-bottom: 4px;
+    border: 1px solid gray;
+  }
+
   #icon_edit_sm {
     width: 18px;
     height: 18px;
@@ -565,7 +533,7 @@
     padding-right: 12px;
   }
 
-  #icon_print img {
+  #icon_print {
     width: 20px;
     height: 20px;
     margin-top: -4px;
