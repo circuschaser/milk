@@ -1,5 +1,6 @@
 class Milkrun < ActiveRecord::Base
-  attr_accessible :date,
+  attr_accessible :cycle_id,
+                  :date,
   								:mprice, :bprice, :cprice,
   								:gasprice, :distance, :mpg,
   								:iceprice,
@@ -8,6 +9,12 @@ class Milkrun < ActiveRecord::Base
 
   has_many :orders, dependent: :destroy
   has_many :buyers, through: :orders
+  belongs_to :cycle
+
+  scope :active, where(active: true)
+  scope :inactive, where(active: false)
+
+  default_scope order: 'date ASC'
 
   accepts_nested_attributes_for :orders, :buyers
 
@@ -116,6 +123,7 @@ class Milkrun < ActiveRecord::Base
     end
     t
   end
+
 
 end
 

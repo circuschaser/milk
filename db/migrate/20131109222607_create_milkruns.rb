@@ -2,6 +2,7 @@ class CreateMilkruns < ActiveRecord::Migration
   def change
     create_table :milkruns do |t|
       t.date    :date
+      t.integer :cycle_id
       
       # PRICES
       t.decimal :mprice
@@ -28,6 +29,8 @@ class CreateMilkruns < ActiveRecord::Migration
 
       t.integer :bag
       t.decimal :bag_ice
+
+      t.boolean :active, default: false
 
       t.timestamps
     end

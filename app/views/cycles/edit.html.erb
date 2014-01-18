@@ -1,0 +1,26 @@
+<% @cycle = Cycle.find(params[:id]) %>
+
+<h2 class="btn btn-primary">CYCLE SETTINGS
+	<span class="btn btn-default"><%= link_to @cycle.name, @cycle %></span>
+</h2>
+
+<div class="form-vertical">
+	<%= simple_form_for @cycle do |f| %>
+
+	<div id="payment">
+		<%= f.input :name, label: false, input_html: {class: "form-control"} %>
+		<span class="label">Name</span>
+
+
+		<div id="date">
+			<%= f.input :startdate, as: :date, order: [:month, :day, :year], label: false, class: "form-control" %>
+		</div>
+
+	</div>
+
+
+	<div class="button">
+  <%= f.button :submit, 'UPDATE', :class => 'btn-primary' %>
+	</div>
+	<% end %>
+</div>

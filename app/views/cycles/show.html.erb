@@ -1,37 +1,33 @@
 <h3>
-<% if current_cycle.nil? %>
-  <div class="newbutton2">
-   <%= link_to "CYCLES HOME", cycles_path, class: "label label-default" %>
-  </div>
-  MILK RUNS
-  <span class="newbutton">
-    <%= link_to "NEW CYCLE", new_cycle_path, class: "btn btn-primary" %>
-  </span>
-<% else %>
-  <div class="newbutton2">
-    <%= link_to "CURRENT CYCLE" + " " + "#{current_cycle.name}",cycles_path,
-                                            class: "label label-success" %>
-  </div>
-  MILK RUNS
+  <% if @cycle == current_cycle %>
+    <div class="newbutton2">
+  	 <%= link_to "CURRENT CYCLE" + " " + "#{@cycle.name}", cycles_path, class: "label label-success" %>
+    </div>
+  <% else %>
+    <div class="newbutton2">
+     <%= link_to "CYCLE" + " " + "#{@cycle.name}", cycles_path, class: "label label-warning" %>
+    </div>
+  <% end %>
 
-  <div class="runtotals2">
+	MILK RUNS
+
+    <div class="runtotals2">
     START DATE
-    <div class="label label-info"><%= current_cycle.startdate.strftime("%b %Y") %></div>
+    <div class="label label-info"><%= @cycle.startdate.strftime("%b %Y") %></div>
   </div>
 
   <div class="runtotals2">
     END DATE
-    <div class="label label-info"><%= current_cycle.lastdate.strftime("%b %Y") %></div>
+    <div class="label label-info"><%= @cycle.lastdate.strftime("%b %Y") %></div>
   </div>
 
   <span class="btn-group newbutton">
-    <%= link_to "NEW MILK RUN", new_cycle_milkrun_path(current_cycle), class: "btn btn-primary" %>
-    <%= link_to "SETTINGS", edit_cycle_path(current_cycle), class: "btn btn-default" %>
+    <%= link_to "NEW MILK RUN", new_cycle_milkrun_path(@cycle.id), class: "btn btn-primary" %>
+    <%= link_to "SETTINGS", edit_cycle_path(@cycle), class: "btn btn-default" %>
   </span>
-<% end %>
 </h3>
-</br>
 
+</br>
 <div class="span8">
 <table class="table">
   <thead>
@@ -57,9 +53,9 @@
     </tr>
   </thead>
   <tbody>
-    <% if !current_cycle.nil? %>
+    <% if !@cycle.milkruns.empty? %>
 
-    <% current_cycle.milkruns.each do |m| %>
+    <% @cycle.milkruns.all.each do |m| %>
     <tr>
       <td><%= link_to m.date.strftime("%B %d"), milkrun_path(m) %></td>
       
@@ -100,7 +96,7 @@
 
     <% else %>
     <tr>
-      <td>THERE IS NO CURRENT CYCLE.</td>
+      <td>No Milk Runs Found.</td>
     </tr>
     <% end %>
 

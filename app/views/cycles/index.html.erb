@@ -1,0 +1,78 @@
+<h3>
+  MILK CYCLES
+  <span class="newbutton"><%= link_to "NEW MILK CYCLE", new_cycle_path, class: "btn btn-primary" %>
+</h3>
+
+<div class="span8">
+	<table class="table">
+			<tr>
+				<!-- 1 -->
+				<th>NAME</th>
+
+				<!-- 2 -->
+				<th>FIRST RUN</th>
+
+				<!-- 3 -->
+				<th>LAST RUN</th>
+
+				<!-- 4 -->
+				<th></th>
+
+				<!-- 5 -->
+				<th></th>
+
+				<!-- 6 -->
+				<th></th>
+
+				<!-- 7 -->
+				<th></th>
+
+			</tr>
+
+		<% Cycle.all.each do |c| %>
+		<% @first = c.milkruns.first %>
+		<% @last = c.milkruns.last %>
+
+			<tr>
+				<!-- 1 -->
+				<td><%= link_to c.name, cycle_path(c) %></td>
+
+				<!-- 2 -->
+				<% if @first.nil? %>
+
+				<td><%= c.startdate.strftime("%B %d, %Y") %></td>
+				<td></td>
+
+				<% else %>
+				<!-- 2 -->
+				<td>
+					<%= link_to @first.date.strftime("%B %d, %Y"), milkrun_path(@first) %>
+				</td>
+
+				<!-- 3 -->
+				<td>
+					<%= link_to @last.date.strftime("%B %d, %Y"), milkrun_path(@last) %>
+				</td>
+				<% end %>
+
+				<!-- 4 -->
+				<td></td>
+
+				<!-- 5 -->
+				<td></td>
+
+				<!-- 6 -->
+				<td></td>
+
+				<!-- 7 -->
+	      <td class="button">
+	        <div class="btn-group btn-group-xs">
+	          <%= link_to image_tag("icon_delete2.png"), c, class: "btn btn-danger icon",
+	                method: :delete %>
+	        </div>
+	      </td>
+
+	    </tr>
+		<% end %>
+	</table>
+</div>

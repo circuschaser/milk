@@ -6,6 +6,16 @@ class BuyersController < ApplicationController
   def create
 		@buyer = Buyer.new(params[:buyer])
 		if @buyer.save
+			if @buyer.perm_milk.nil?
+				@buyer.perm_milk = 0
+			end
+			if @buyer.perm_butter.nil?
+				@buyer.perm_butter = 0
+			end
+			if @buyer.perm_cream.nil?
+				@buyer.perm_cream = 0
+			end
+			@buyer.save
 			redirect_to active_buyers_path
     end
   end
@@ -44,6 +54,7 @@ class BuyersController < ApplicationController
   def deactivate
 		@buyer = Buyer.find(params[:id])
 		@buyer.active = false
+		@buyer.drive_order = nil
 		if @buyer.save
 			flash[:success] = "\"#{@buyer.name.upcase}\" was succesfully Deactivated"
 			redirect_to :back

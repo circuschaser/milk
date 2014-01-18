@@ -16,4 +16,8 @@ module ApplicationHelper
     number_to_currency(thing, unit: "")
   end
 
+  def current_cycle
+    @current_cycle = Cycle.where('startdate <= ?', Time.now).last
+  end
+
 end

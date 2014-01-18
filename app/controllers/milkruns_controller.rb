@@ -1,46 +1,25 @@
 class MilkrunsController < ApplicationController
   def new
-  	@milkrun = Milkrun.new
+  	@cycle = Cycle.find(params[:cycle_id])
+  	@milkrun = @cycle.milkruns.build
   end
 
 	def create
-		@milkrun = Milkrun.new(params[:milkrun])
-
-		@milkrun.mprice = "5"
-		@milkrun.bprice = "5"
-		@milkrun.cprice = "10"
-
-		@milkrun.distance = "260"
-		@milkrun.mpg = "20"
-		@milkrun.iceprice = "1.75"
-
-		@milkrun.cool1 = "24"
-		@milkrun.cool1_ice = "2"
-
-		@milkrun.cool2 = "20"
-		@milkrun.cool2_ice = "2"
-
-		@milkrun.cool3 = "20"
-		@milkrun.cool3_ice = "2"
-
-		@milkrun.bag = "3"
-		@milkrun.bag_ice = "0.5"
-
-		if @milkrun.save
-			redirect_to '/milkruns'
-		else
-      render 'new'
-    end
+  	@cycle = Cycle.find(params[:cycle_id])
+		@milkrun = @cycle.milkruns.create(params[:milkrun])
 	end
 
 	def duplicate
-		@milkrun = Milkrun.last
+  	@cycle = Cycle.find(params[:cycle_id])
+		@milkrun = @cycle.milkruns.last
 		@new = @milkrun.dup
 		@milkrun.orders.each do |x|
 			@new.orders << x.dup
 		end
 
 		if @new.save
+			@new.date += 3.weeks
+			@new.save
 			redirect_to edit_milkrun_path(@new)
 		else
 			redirect_to '/milkruns'
@@ -50,6 +29,25 @@ class MilkrunsController < ApplicationController
 	def show
 		@milkrun = Milkrun.find(params[:id])
 	end
+
+  def activate
+		@milkrun = Milkrun.find(params[:id])
+		@prev = Milkrun.find_by_date(@milkrun.date - 3.weeks)
+
+		if !@prev.nil?
+			@prev.orders.each do |x|
+				@milkrun.orders << x.dup
+			end
+		end
+		@milkrun.active = true
+		if @milkrun.save
+
+			redirect_to :back
+		else
+			flash.now[:error] = "Whoops. SOMETHING WHEN WRONG.\nActivation failed."
+			redirect_to :back
+		end
+  end
 
 	def p_archive
 		@milkrun = Milkrun.find(params[:id])

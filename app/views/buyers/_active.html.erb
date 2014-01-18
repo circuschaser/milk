@@ -16,7 +16,9 @@
         <%= link_to image_tag("icon_unarc_wht.png"), deactivate_buyer_path(b), class: "btn btn-warning icon" %>
       </div>
     </td>
-    
+
+    <td class="number"><%= b.drive_order %></td>
+
     <td><%= b.email %></td>
     <td class="number"><%= b.phone %></td>
     <td class="number"><%= b.altphone %></td>

@@ -1,0 +1,38 @@
+<h2>NEW MILK CYCLE</h2>
+
+<div class="form-vertical">
+	<%= simple_form_for @cycle do |f| %>
+	<% @prevcyc = Cycle.last %>
+
+	<div id="payment">
+		<% if !@prevcyc.nil? %>
+
+			<%= f.input :name, label: false, input_html: { value: "%03d" % "#{@prevcyc.name.to_i + 1 }", class: "form-control"} %>
+
+		<% else %>
+
+			<%= f.input :name, label: false, input_html: { value: "001", class: "form-control"} %>
+
+		<% end %>
+		<span class="label">Name</span>
+
+
+		<div id="date">
+
+			<% if !@prevcyc.nil? %>
+				<% @last = @prevcyc.milkruns.last %>
+				<%= f.input :startdate, as: :date, default: @last.date + 3.weeks, order: [:month, :day, :year], label: false, class: "form-control" %>
+
+			<% else %>
+					<%= f.input :startdate, as: :date, order: [:month, :day, :year], label: false, class: "form-control" %>
+			<% end %>
+
+		</div>
+
+	</div>
+
+	<div class="button">
+  <%= f.button :submit, 'CREATE', :class => 'btn-primary' %>
+	</div>
+	<% end %>
+</div>

@@ -17,13 +17,26 @@
 
 		<%= f.input :altphone, label: false, input_html: {class: "form-control"} %>
 		<span class="label">Alternate Phone</span>
-	</br>
-		<%= f.input :deposit, label: false, input_html: {class: "form-control"} %>
-		<span class="label">Deposit</span>
 	</div>
 
-		<div class="button">
-	  <%= f.button :submit, 'Create', :class => 'btn-primary' %>
-  	</div>
+	<div id="trip">
+		<%= f.input :perm_milk, label: false, input_html: {class: "form-control"} %>
+		<span class="label">Milk</span>
+
+		<%= f.input :perm_butter, label: false, input_html: {class: "form-control"} %>
+		<span class="label">Buttermilk</span>
+
+		<%= f.input :perm_cream, label: false, input_html: {class: "form-control"} %>
+		<span class="label">Cream</span>
+	</div>
+
+	<div id="trip">
+		<%= f.input :drive_order, label: false, input_html: {class: "form-control"} %>
+		<span class="label">Drive Order</span>
+	</div>
+
+	<div class="button">
+  <%= f.button :submit, 'Create', :class => 'btn-primary' %>
+	</div>
 	
 	<% end %>

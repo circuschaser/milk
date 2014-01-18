@@ -1,7 +1,7 @@
 <h2>NEW MILK RUN</h2>
 
 <div class="form-vertical">
-	<%= simple_form_for @milkrun do |f| %>
+	<%= simple_form_for ([@cycle, @cycle.milkruns.build]) do |f| %>
 		<%= f.input :date, order: [:month, :day, :year] %>
 		<%= f.input :gasprice, input_html: { value: "3.29"} %>
 		

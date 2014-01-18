@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206224554) do
+ActiveRecord::Schema.define(:version => 20140111020221) do
 
   create_table "buyers", :force => true do |t|
     t.string   "firstname"
@@ -19,14 +19,26 @@ ActiveRecord::Schema.define(:version => 20131206224554) do
     t.string   "phone"
     t.string   "altphone"
     t.string   "email"
-    t.integer  "deposit"
-    t.boolean  "active",     :default => true
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.integer  "drive_order"
+    t.integer  "perm_milk"
+    t.integer  "perm_butter"
+    t.integer  "perm_cream"
+    t.boolean  "active",      :default => true
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "cycles", :force => true do |t|
+    t.string   "name"
+    t.date     "startdate"
+    t.date     "lastdate"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "milkruns", :force => true do |t|
     t.date     "date"
+    t.integer  "cycle_id"
     t.decimal  "mprice"
     t.decimal  "bprice"
     t.decimal  "cprice"
@@ -42,8 +54,9 @@ ActiveRecord::Schema.define(:version => 20131206224554) do
     t.integer  "cool3_ice"
     t.integer  "bag"
     t.decimal  "bag_ice"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "active",     :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "notes", :force => true do |t|

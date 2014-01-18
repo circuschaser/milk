@@ -32,7 +32,7 @@
 	<% elsif @payment.buyer.balance < 0 %>
 		<%= f.input :amount, label: false, input_html: { value: "#{@payment.buyer.balance * -1 }", class: "form-control"} %>
 	<% else %>
-		<%= f.input :amount, label: false, class: "form-control" %>
+		<%= f.input :amount, label: false, input_html: {class: "form-control"} %>
 	<% end %>
 				<span class="label">Amount</span>
 

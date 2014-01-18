@@ -31,14 +31,19 @@ Milk::Application.routes.draw do
 
   resources :milkruns do
     resources :orders
-    collection do
-      get :duplicate
-    end
     member do
+      get :activate
       get :p_archive
       get :p_pickup
       get :instructions
       get :orders
+    end
+  end
+
+  resources :cycles do
+    resources :milkruns
+    member do
+      get :milkruns
     end
   end
 
