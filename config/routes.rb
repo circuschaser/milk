@@ -33,10 +33,15 @@ Milk::Application.routes.draw do
     resources :orders
     member do
       get :activate
+      get :deactivate
       get :p_archive
       get :p_pickup
       get :instructions
       get :orders
+    end
+    collection do
+      get :active
+      get :inactive
     end
   end
 

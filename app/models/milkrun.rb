@@ -18,6 +18,52 @@ class Milkrun < ActiveRecord::Base
 
   accepts_nested_attributes_for :orders, :buyers
 
+  def fillorders
+    @buyers = Buyer.active
+    @driver = orders.find_by_driver(true).buyer
+    d = orders.find_by_driver(true)
+
+    d.update_attribute(:milk, @driver.perm_milk)
+    d.update_attribute(:buttermilk, @driver.perm_butter)
+    d.update_attribute(:cream, @driver.perm_cream)
+
+    @d = Buyer.where("id = ?", @driver.id)
+    @remaining = (@buyers - @d)
+
+    # orders.destroy_all
+
+    @remaining.count.times do
+      @order = orders.create(date: date)
+      end
+
+    @x = 0
+    @orders = orders[1..-1]
+    @orders.each do |o|
+      name = @remaining[@x]
+      o.update_attribute(:buyer_id, name.id)
+      o.update_attribute(:milk, name.perm_milk)
+      o.update_attribute(:buttermilk, name.perm_butter)
+      o.update_attribute(:cream, name.perm_cream)
+      @x += 1
+    end
+  end
+
+  def eraseorders
+    @orders = orders
+    @driver = orders.where('driver = ?', true)
+    @remaining = (@orders - @driver)
+    
+    @remaining.each do |x|
+      x.destroy
+    end
+
+    d = orders.find_by_driver(true)
+
+    d.update_attribute(:milk, 0)
+    d.update_attribute(:buttermilk, 0)
+    d.update_attribute(:cream, 0)
+  end
+
   def m_orders
   	milk = 0
   	orders.each do |x|
@@ -72,7 +118,9 @@ class Milkrun < ActiveRecord::Base
 
   def ice
 		case 
-  		when order_count <= cool1
+      when order_count == 0
+        ice = 0      
+  		when order_count <= cool1 && order_count > 0
   			ice = cool1_ice
   		when order_count > cool1 && order_count <= (cool1 + cool2)
   			ice = cool1_ice + cool2_ice

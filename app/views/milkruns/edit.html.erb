@@ -8,7 +8,14 @@
 	<div id="date">
 		<%= f.input :date, order: [:month, :day, :year], label: false, class: "form-control" %>
 	</div>
-		<div id="trip">
+
+<% if @milkrun.gasprice == 0 || @milkrun.gasprice.nil? %>
+	<h2>
+		<span class="label label-danger">PLEASE SET A GAS PRICE</span>
+	</h2>
+<% end %>
+
+	<div id="trip">
 		<span class="name">TRIP VARIABLES</span>
 			<%= f.input :gasprice, label: false, input_html: { class: "form-control"} %>
 			<span class="label">Gas Price</span>
@@ -16,7 +23,7 @@
 			<span class="label">Distance</span>
 			<%= f.input :mpg, label: false, input_html: {value: "20", class: "form-control"} %>
 			<span class="label">Vehicle MPG</span>
-		</div>
+	</div>
 
 	<div id="milk">
 		<span class="name">PRICE PER UNIT</span>

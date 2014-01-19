@@ -32,19 +32,25 @@ class MilkrunsController < ApplicationController
 
   def activate
 		@milkrun = Milkrun.find(params[:id])
-		@prev = Milkrun.find_by_date(@milkrun.date - 3.weeks)
-
-		if !@prev.nil?
-			@prev.orders.each do |x|
-				@milkrun.orders << x.dup
-			end
-		end
 		@milkrun.active = true
+		@milkrun.fillorders
 		if @milkrun.save
-
 			redirect_to :back
 		else
 			flash.now[:error] = "Whoops. SOMETHING WHEN WRONG.\nActivation failed."
+			redirect_to :back
+		end
+  end
+
+  def deactivate
+		@milkrun = Milkrun.find(params[:id])
+		@milkrun.active = false
+		@milkrun.eraseorders
+		@milkrun.update_attribute(:gasprice, 0)
+		if @milkrun.save
+			redirect_to :back
+		else
+			flash.now[:error] = "Whoops. SOMETHING WHEN WRONG.\nDeactivation failed."
 			redirect_to :back
 		end
   end
