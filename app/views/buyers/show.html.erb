@@ -5,7 +5,9 @@
 	<% payments = @buyer.payments %>
 
 	<% orders.each do |o| %>
+		<% if o.milkrun.active? %>
   	<% sorted.push(o) %>
+  	<% end %>
 	<% end %>
 
 	<% payments.each do |p| %>

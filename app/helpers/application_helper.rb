@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def current_cycle
-    @current_cycle = Cycle.where('startdate <= ? AND lastdate > ?', Time.now, Time.now + 20.days).first
+    @current_cycle = Cycle.where('startdate <= ? AND lastdate > ?', Time.now + 1.week, Time.now + 1.week).first
   end
 
 end

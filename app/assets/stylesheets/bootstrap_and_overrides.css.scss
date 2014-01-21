@@ -158,6 +158,10 @@
     color: white;
   }
 
+  .zero {
+    color: #ddd;
+  }
+
 /* MILKRUN FORM                                             */
 
   .settings_date {
@@ -533,12 +537,11 @@
 
   .newbutton2 {
     float: left;
+    margin-right: 6px;
     font-size: 20px;
     line-height: 120%;
-    font-weight: normal;
-    /*margin-right: 16px;*/
-    .label {
-      margin: -2px 6px 0 0;      
+    .btn {
+      margin: -2px 3px 0 0;      
     }
   }
 
@@ -575,7 +578,7 @@
   }
 
   .icon_view img {
-    /*width: 14px;*/
+    width: 22px;
     height: 14px;
     margin-top: 0;
     margin-bottom: 1px;

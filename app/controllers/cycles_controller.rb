@@ -9,11 +9,6 @@ class CyclesController < ApplicationController
 		if @cycle.save
 			@cycle.populate
 			@cycle.setlast
-		# end
-		# if @cycle.save
-			# @cycle = Cycle.order("created_at ASC").last
-			# @lastmilk = @cycle.milkruns.last
-			# @cycle.update_attribute(:lastdate, @lastmilk.date)
 			redirect_to cycles_path
 		else
       render 'new'
