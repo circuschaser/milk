@@ -1,4 +1,4 @@
-<!-- CREATE ARRAYS -->
+	<!-- CREATE ARRAYS -->
 
 	<% sorted = [] %>
 	<% orders = @buyer.orders %>
@@ -31,10 +31,15 @@
 
 	<% if @buyer.gas_credits > 0 %>
 		<div class="runtotals" class="btn btn-default">
-			DRIVER CREDIT EARNED
+			GAS CREDIT EARNED
 			<div class="label label-info"><%= price(@buyer.gas_credits) %></div>
 		</div>
 	<% end %>
+
+		<div class="runtotals" class="btn btn-default">
+			DRIVE COUNT
+			<div class="badge"><%= @buyer.drivecount %></div>
+		</div>
 
 	<div class="runtotals" class="btn btn-default">
 	<% if @buyer.balance >= 0 %>	
@@ -94,9 +99,13 @@
 	    <tr>
     	<!-- 2. DATE -->
 	    	<% if t.is_a? Order %>
-	    	<td><%= link_to "#{t.milkrun.date.strftime("%B %d, %Y")}", t.milkrun %></td>
+	    		<% if t.driver? %>
+	    		<td><%= link_to "#{t.milkrun.date.strftime("%B %d, %Y")}", t.milkrun %> : driver</td>
+	    		<% else %>
+	    		<td><%= link_to "#{t.milkrun.date.strftime("%B %d, %Y")}", t.milkrun %></td>
+	    		<% end %>
 	    	<% else %>
-	    	<td><%= t.date.strftime("%B %d, %Y") %></td>
+	    		<td><%= t.date.strftime("%B %d, %Y") %></td>
 	    	<% end %>
 
     	<!-- 3. TYPE  4 5 6 -->
