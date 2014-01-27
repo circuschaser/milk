@@ -8,9 +8,11 @@ class Cycle < ActiveRecord::Base
 
   def populate
   	@buyers = Buyer.active
-  	@buyers.sort! {|x,y| x.drive_order <=> y.drive_order }
+  	@nondrivers = @buyers.where(drive_order: nil)
+  	@drivers = @buyers - @nondrivers
+  	@drivers.sort! {|x,y| x.drive_order <=> y.drive_order }
   	@mdate = startdate
-  	@buyers.count.times do
+  	@drivers.count.times do
 			@milkrun = milkruns.create(date: @mdate)
 			@mdate += 3.weeks
 		end
@@ -37,7 +39,7 @@ class Cycle < ActiveRecord::Base
 	  @x = 0
 	  milkruns.each do |m|
 	  	order = m.orders.create(date: m.date)
-		  name = @buyers[@x]
+		  name = @drivers[@x]
 	  	order.update_attribute(:buyer_id, name.id)
 		  order.update_attribute(:driver, true)
 	  	@x += 1

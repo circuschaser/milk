@@ -1,8 +1,15 @@
 <% @buyer = Buyer.find(params[:id]) %>
 
 <h2 class="btn btn-info lowerspace">EDIT INFO FOR 
-	<span class="btn btn-default"><%= link_to "#{@buyer.name}", buyer_path(@buyer) %></span></h2>
-<p></p>
+	<span class="btn btn-default"><%= link_to "#{@buyer.name}", buyer_path(@buyer) %></span>
+</h2>
+<% if @buyer.drive_order.nil? %>
+	<h4>
+		<span class="label label-warning">
+			If you do not set the Drive Order, no Milk Run will be assigned to this family during Cycle creation.
+		</span>
+	</h4>
+<% end %>
 
 <%= simple_form_for @buyer do |f| %>
 	<div id="newfamily">
@@ -35,8 +42,13 @@
 	</div>
 
 	<div id="trip">
+		<% if @buyer.drive_order.nil? %>
+			</br>
+				<div class="label label-danger">PLEASE SET DRIVE ORDER</div>
+		<% end %>
 		<%= f.input :drive_order, label: false, input_html: {class: "form-control"} %>
 		<span class="label">Drive Order</span>
+
 	</div>
 
 		<div class="button">
