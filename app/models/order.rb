@@ -12,6 +12,10 @@ class Order < ActiveRecord::Base
 
   # accepts_nested_attributes_for :milkruns
 
+  def cycle
+    milkrun.cycle
+  end
+
 # DEFINE MILK - BUTTERMILK - CREAM
   def m
     if milk.nil?

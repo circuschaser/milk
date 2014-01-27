@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def price(thing)
-    number_to_currency(thing, unit: "")
+    number_to_currency(thing, unit: "", negative_format: "%u%n")
   end
 
   def current_cycle

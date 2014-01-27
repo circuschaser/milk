@@ -26,8 +26,15 @@
 	<div class="noprint btn-group newbutton">	
 	  <%= link_to "NEW ORDER", new_milkrun_order_path(@milkrun.id), class: "btn btn-primary" %>
 	  <%= link_to "SETTINGS", edit_milkrun_path(@milkrun), class: "btn btn-default" %>
-	  <%= link_to image_tag("icon_print.png"), p_archive_milkrun_path, class: "btn btn-default", id: "icon_print" %>
+	  <%= link_to image_tag("icon_print.png"), p_pickup_milkrun_path, class: "btn btn-default", id: "icon_print" %>
 	</div>
+
+	<% if @milkrun.gasprice == 0 || @milkrun.gasprice.nil? %>
+		<h2>
+			<span class="label label-danger"><%= link_to "PLEASE SET A GAS PRICE",
+																						edit_milkrun_path(@milkrun) %></span>
+		</h2>
+	<% end %>
 </h3>
 
 </br>
@@ -46,10 +53,9 @@
       <th>GALLONS</th>
       <th>ORDER COST</th>
 
-      <th>CAPPED</th>
-      <th>NORMAL</th>
+      <th>TRIP COST</th>
       <th>PPG</th>
-      <th>AMOUNT DUE</th>
+      <th>TOTAL</th>
 
     </tr>
   </thead>
@@ -104,9 +110,7 @@
 	      <!-- TRIP COST -->
       	<% if ord.under == true %>
 		      <td class="number"><%= price(ord.capped) %></td>
-		      <td class="number">-</td>
 	      <% else %>
-		      <td class="number">-</td>
 		      <td class="number"><%= price(ord.capped) %></td>
 		    <% end %>
 
@@ -140,9 +144,8 @@
 	      <td class="number"><%= x.order_count %></td>
 
 	      <td class="number"><span class="dollar">$</span><%= price(x.order_total) %></td>
-	      <td class="number">-</td>
-	      <td class="number">-</td>
 	      <td class="number"><span class="dollar">$</span><%= price(x.total_capped_cost) %></td>
+	      <td></td>
 	      <td class="number"><span class="dollar">$</span><%= price(x.total_due) %></td>
 
 	    </tr>

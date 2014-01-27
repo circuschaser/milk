@@ -17,6 +17,12 @@
       </div>
     </td>
 
+    <% if b.drivecount > 0 %>
+    <td class="number"><span class="label label-info"><%= b.drivecount %></span></td>
+    <% else %>
+    <td class="number">-</td>
+    <% end %>
+
     <td class="number"><%= b.drive_order %></td>
 
     <td><%= b.email %></td>

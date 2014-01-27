@@ -8,36 +8,22 @@
 	<div id="milkdate" class="label label-default">
 		<%= link_to @milkrun.date.strftime("%B %d, %Y").upcase, milkrun_path(@milkrun) %>
 	</div>
-
-<div class="noprint diff">
-	<div class="noprint runtotals btn btn-default">
-		TO DRIVER
-		<div class="label label-warning"><%= price(@milkrun.total_trip_cost.floor) %></div>
-	</div>
-	<div class="noprint runtotals btn btn-default">
-		TO FARM
-		<div class="label label-warning"><%= price(@milkrun.order_total) %></div>
-	</div>
-</div>
+	<div class="noprint p_ref">PICKUP SHEET</div>
 
 <% x = @milkrun %>
-<div class="noprint diff">
-<% if x.diff <= 0 %>
-<div class="runtotals btn btn-default">
-	<div class="label label-danger"><%= price(x.diff) %></div>
-</div>
-<% else %>
-<div class="runtotals btn btn-default">
-	<div class="label label-success"><%= price(x.diff) %></div>
-</div>
-<% end %>
-</div>
 
 	<div class="btn-group newbutton noprint">	
 	  <%= link_to "ARCHIVE", p_archive_milkrun_path, class: "btn btn-default" %>
 	  <%= link_to "PICKUP", p_pickup_milkrun_path, class: "btn btn-primary" %>
 	  <%= link_to "INSTRUCTIONS", instructions_milkrun_path, class: "btn btn-default" %>
 	</div>
+
+	<% if @milkrun.gasprice == 0 || @milkrun.gasprice.nil? %>
+		<h2>
+			<span class="noprint label label-danger"><%= link_to "PLEASE SET A GAS PRICE",
+																						edit_milkrun_path(@milkrun) %></span>
+		</h2>
+	<% end %>
 </h3>
 
 </br>
@@ -46,8 +32,8 @@
 <table class="table table-condensed fourteen">
   <thead>
     <tr>
-      <th>DRIVER</th>
       <th>NAME</th>
+      <th>DRIVE DATE</th>
 
       <th class="noscreen">GOT MILK</th>
 
@@ -55,10 +41,7 @@
       <th>BUTTER</th>
       <th>CREAM</th>
       <th>GALLONS</th>
-      <th class="noprint">ORDER COST</th>
 
-      <th class="noprint">CAPPED</th>
-      <th class="noprint">NORMAL</th>
       <th>AMOUNT DUE</th>
 
     </tr>
@@ -69,14 +52,17 @@
 	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
 	    <% sorted.each do |ord| %>
 	    <tr>
-	    	<!-- DRIVER -->
-	    	<% if ord.driver? %>
-		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
-		      <td><span class="label label-success noprint"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
-	    	<% else %>
-	    	<!-- NON DRIVER -->
-	  	    <td></td>
+	    	<!-- NAME -->
 	    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+
+	    	<!-- DRIVE DATE -->
+	    	<% if ord.driver? %>
+		      <td class="name">DRIVER</td>
+	    	<!-- NON DRIVER -->
+	    	<% elsif (ord.buyer.nextdrive.empty?) || (ord.buyer.nextdate > ord.milkrun.cycle.lastdate) %>
+		      <td class="name">done</td>
+		    <% else %>
+	    	  <td class="name"><%= link_to "#{ord.buyer.nextdate.strftime("%B %d, %Y")}", ord.milkrun %></td>
 	    	<% end %>
 
 	    	<!-- GOT MILK -->
@@ -94,20 +80,13 @@
 	    	<!-- TOTAL GALLON COUNT -->
 	      <td class="number"><%= ord.gallons %></td>
 
-	    	<!-- ORDER COST -->
-	      <td class="noprint number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
-
-	      <!-- TRIP COST -->
-      	<% if ord.under == true %>
-		      <td class="noprint number"><%= price(ord.capped) %></td>
-		      <td class="noprint number">-</td>
-	      <% else %>
-		      <td class="noprint number">-</td>
-		      <td class="noprint number"><%= price(ord.capped) %></td>
-		    <% end %>
 
 	      <!-- TOTAL COST -->
-	      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
+	      <% if ord.buyer.balance >= 0  %>
+	      <td class="number"></span>&#9786;</span></td>
+	      <% else %>
+	      <td class="number"><span class="dollar">$</span><%= price(ord.buyer.balance) %></td>
+	      <% end %>
 
 	    </tr>
     	<% end %>
@@ -126,10 +105,9 @@
 	      <td class="number"><%= x.c_orders %></td>
 	      <td class="number"><%= x.order_count %></td>
 
-	      <td class="noprint number"><span class="dollar">$</span><%= price(x.order_total) %></td>
-	      <td class="noprint number">-</td>
-	      <td class="noprint number">-</td>
-	      <td class="noprint number"><span class="dollar">$</span><%= price(x.total_due) %></td>
+	      <td class="noprint number"></td>
+	      <td class="noprint number"></td>
+	      <td class="noprint number"></td>
 
 	    </tr>
   	</tbody>

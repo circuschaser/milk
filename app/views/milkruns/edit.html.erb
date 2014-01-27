@@ -5,8 +5,10 @@
 </h2>
 
 <%= simple_form_for @milkrun do |f| %>
-	<div id="date">
-		<%= f.input :date, order: [:month, :day, :year], label: false, class: "form-control" %>
+	<div id="payment"
+		<div id="date">
+			<%= f.input :date, order: [:month, :day, :year], label: false, class: "form-control" %>
+		</div>
 	</div>
 
 <% if @milkrun.gasprice == 0 || @milkrun.gasprice.nil? %>

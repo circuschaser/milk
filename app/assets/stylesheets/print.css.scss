@@ -37,7 +37,7 @@
   content: ""; // Kills the expanded links on anchor tags
   }
 
-  /* DIRECTIONS                                               */
+/* DIRECTIONS                                               */
 
   #directions {
     font-size: 12px;      
@@ -189,6 +189,10 @@
 
   #milkdate {
     margin-right: 30px;
+  }
+
+  .diff {
+    display: inline;
   }
 
   .runtotals {

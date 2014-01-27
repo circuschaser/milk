@@ -69,4 +69,55 @@ class Buyer < ActiveRecord::Base
     due
   end
 
+  def drivecount
+    ords = orders.where(driver: true)
+    drives = []
+    ords.each do |o|
+      if o.milkrun.active?
+        drives.push(o)
+      end
+    end
+    drives.count
+  end
+
+  def nextdrive
+    ords = orders.where(driver: true).order("date ASC")
+    drives = []
+    ords.each do |o|
+      if o.milkrun.active?
+        drives.push(o)
+      end
+    end
+    nextdrive = ords - drives
+    nextdrive
+  end
+
+  def nextdate
+    nextdrive[0].date
+  end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

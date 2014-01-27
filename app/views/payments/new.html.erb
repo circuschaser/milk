@@ -1,4 +1,4 @@
-<h2 class="btn btn-success lowerspace">NEW PAYMENT FOR
+	<h2 class="btn btn-success lowerspace">NEW PAYMENT FOR
 	<span class="btn btn-default"><%= link_to "#{@buyer.name}", buyer_path(@buyer) %></span></h2>
 <p></p>
 	<%= simple_form_for ([@buyer, @buyer.payments.build]) do |f| %>
