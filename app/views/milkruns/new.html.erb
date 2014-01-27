@@ -2,9 +2,22 @@
 
 <div class="form-vertical">
 	<%= simple_form_for ([@cycle, @cycle.milkruns.build]) do |f| %>
-		<%= f.input :date, order: [:month, :day, :year] %>
-		<%= f.input :gasprice, input_html: { value: "3.29"} %>
-		
-	  <%= f.button :submit, 'Create', :class => 'btn-primary' %>
+	<% @last = @cycle.milkruns.all.last %>
+
+	<div id="payment">
+
+		<%= f.input :gasprice, label: false, input_html: { value: "3.29", class: "form-control"} %>
+		<span class="label">Gas Price</span>
+
+		<div id="date">
+			<%= f.input :date, default: @last.date + 3.weeks, order: [:month, :day, :year], label: false, class: "form-control" %>
+		</div>
+
+	</div>
+
+	<div class="button">
+  <%= f.button :submit, 'CREATE', :class => 'btn-primary' %>
+	</div>
 	<% end %>
+	
 </div>

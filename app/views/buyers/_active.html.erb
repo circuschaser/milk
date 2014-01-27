@@ -18,13 +18,16 @@
     </td>
 
     <% if b.drivecount > 0 %>
-    <td class="number"><span class="label label-info"><%= b.drivecount %></span></td>
+    <td class="number"><span class="label label-success"><%= b.drivecount %></span></td>
     <% else %>
     <td class="number">-</td>
     <% end %>
 
+    <% if b.drive_order.nil? %>
+    <td class="number"><span class="badge">x</td>
+    <% else %>
     <td class="number"><%= b.drive_order %></td>
-
+    <% end %>
     <td><%= b.email %></td>
     <td class="number"><%= b.phone %></td>
     <td class="number"><%= b.altphone %></td>

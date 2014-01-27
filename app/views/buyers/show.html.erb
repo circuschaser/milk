@@ -100,7 +100,7 @@
     	<!-- 2. DATE -->
 	    	<% if t.is_a? Order %>
 	    		<% if t.driver? %>
-	    		<td><%= link_to "#{t.milkrun.date.strftime("%B %d, %Y")}", t.milkrun %> : driver</td>
+	    		<td><%= link_to "#{t.milkrun.date.strftime("%B %d, %Y")}", t.milkrun %>&nbsp; &nbsp; &#9642; driver</td>
 	    		<% else %>
 	    		<td><%= link_to "#{t.milkrun.date.strftime("%B %d, %Y")}", t.milkrun %></td>
 	    		<% end %>

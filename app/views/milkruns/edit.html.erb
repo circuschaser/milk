@@ -1,6 +1,6 @@
 <% @milkrun = Milkrun.find(params[:id]) %>
 
-<h2 class="btn btn-primary">MILK RUN SETTINGS
+<h2 class="btn btn-info">MILK RUN SETTINGS
 	<span class="btn btn-default"><%= link_to @milkrun.date.strftime("%B %d, %Y"), @milkrun %></span>
 </h2>
 
@@ -11,16 +11,15 @@
 		</div>
 	</div>
 
-<% if @milkrun.gasprice == 0 || @milkrun.gasprice.nil? %>
-	<h2>
-		<span class="label label-danger">PLEASE SET A GAS PRICE</span>
-	</h2>
-<% end %>
-
 	<div id="trip">
 		<span class="name">TRIP VARIABLES</span>
 			<%= f.input :gasprice, label: false, input_html: { class: "form-control"} %>
 			<span class="label">Gas Price</span>
+			<% if @milkrun.gasprice == 0 || @milkrun.gasprice.nil? %>
+			</br>
+			</br>
+				<div class="label label-danger">PLEASE SET A GAS PRICE</div>
+			<% end %>
 			<%= f.input :distance, label: false, input_html: {value: "260", class: "form-control"} %>
 			<span class="label">Distance</span>
 			<%= f.input :mpg, label: false, input_html: {value: "20", class: "form-control"} %>
@@ -62,7 +61,7 @@
 			<span class="label">Freezer bag</span>
 	</div>
 	<div class="button">
-  <%= f.button :submit, 'Update', :class => 'btn-primary' %>
+  <%= f.button :submit, 'UPDATE', :class => 'btn-primary' %>
 	</div>
 
 	<% end %>

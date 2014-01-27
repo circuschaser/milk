@@ -70,6 +70,9 @@ class MilkrunsController < ApplicationController
 	def update
 		@milkrun = Milkrun.find(params[:id])
 		if @milkrun.update_attributes(params[:milkrun])
+			if @milkrun.gasprice.nil?
+				@milkrun.update_attribute(:gasprice, 0)
+			end
 			@milkrun.save
       flash[:success] = "Settings Updated"
   		redirect_to milkrun_path(@milkrun)
