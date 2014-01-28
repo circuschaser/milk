@@ -13,9 +13,11 @@
   $grayBorder:  #ddd;
   $darkGray:    #959186;
 
-  .noprint,
-  .noprint * {
+  .noprint {
     display: none;
+    * {
+      display: none;
+    }
   }
 
   .fourteen {
@@ -23,7 +25,8 @@
   }
 
   .name,
-  #milkdate {
+  #milkdate,
+  .table {
     /*text-indent: -53px;*/
     /*padding-left: 53px;*/
     & a {

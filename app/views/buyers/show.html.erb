@@ -16,10 +16,9 @@
 
 	<% sorted.sort! {|x,y| x.date <=> y.date } %>
 
-<h3><div class="label label-warning"><%= @buyer.name %></div>
+<h3 class="noprint"><div class="label label-warning"><%= @buyer.name %></div>
 
-	<div class="runtotals" class="btn btn-default">
-		Status:
+	<div class="runtotals btn btn-default">Status:
 	<% if @buyer.active? %>	
 		<div class="label label-success"><%= link_to "ACTIVE", deactivate_buyer_path(@buyer) %></div>
 		<%= link_to image_tag("icon_unarc2.png"), deactivate_buyer_path(@buyer), class: "icon_sm" %>
@@ -30,24 +29,24 @@
 	</div>
 
 	<% if @buyer.gas_credits > 0 %>
-		<div class="runtotals" class="btn btn-default">
+		<div class="runtotals btn btn-default">
 			GAS CREDIT EARNED
 			<div class="label label-info"><%= price(@buyer.gas_credits) %></div>
 		</div>
 	<% end %>
 
-		<div class="runtotals" class="btn btn-default">
+		<div class="runtotals btn btn-default">
 			DRIVE COUNT
 			<div class="badge"><%= @buyer.drivecount %></div>
 		</div>
 
-	<div class="runtotals" class="btn btn-default">
+	<div class="runtotals btn btn-default">
 	<% if @buyer.balance >= 0 %>	
 		Current Balance:
-		<div class="label label-success"> <%= @buyer.balance %></div>
+		<div class="label label-success"> <%= price(@buyer.balance) %></div>
 	<% else %>
 		Current Balance:
-		<div class="label label-danger"> <%= @buyer.balance %></div>
+		<div class="label label-danger"> <%= price(@buyer.balance) %></div>
 	<% end %>
 	</div>
 
@@ -56,8 +55,22 @@
   	<%= link_to "SETTINGS", edit_buyer_path(@buyer.id), class: "btn btn-default" %>
   </span>
 </h3>
+
+<h3 class="noscreen">
+	<div class="label label-warning"><%= @buyer.name %></div>
+	<span class="runtotals">
+		<% if @buyer.balance >= 0 %>	
+			Current Balance:
+			<div class="label label-success"> <%= price(@buyer.balance) %></div>
+		<% else %>
+			Current Balance:
+			<div class="label label-danger"> <%= price(@buyer.balance) %></div>
+		<% end %>
+	</span>
+</h3>
+
 </br>
-<div class="notes">
+<div class="notes noprint">
 	<% if @buyer.notes.empty? %>
 		<div class="no_notes">there are no Notes for this Family.</div>
 	<% else %>
@@ -89,7 +102,7 @@
       <th>BUTTERMILK</th>
       <th>CREAM</th>
       <th>AMOUNT</th>
-    	<th></th>
+    	<th class="noprint"></th>
     </tr>
   </thead>
 
@@ -134,14 +147,14 @@
 
     	<!-- 9. DELETE -->
 	    	<% if t.is_a? Payment %>
-	    	<td class="number">
+	    	<td class="number noprint">
     	    <div class="btn-group btn-group-xs">
   	        <%= link_to image_tag("icon_delete2.png"), t, class: "btn btn-warning icon",
                 method: :delete, data: { confirm: "Do you really want to delete this Payment?" } %>
 	        </div>
 	      </td>
 	    	<% else %>
-		    	<td></td>
+		    	<td class="noprint"></td>
 	    	<% end %>
 	    </tr>
     	<% end %>

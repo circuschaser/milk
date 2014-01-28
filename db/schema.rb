@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20140111020221) do
     t.string   "altphone"
     t.string   "email"
     t.integer  "drive_order"
+    t.integer  "deposit"
     t.integer  "perm_milk"
     t.integer  "perm_butter"
     t.integer  "perm_cream"

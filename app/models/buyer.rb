@@ -1,7 +1,7 @@
 class Buyer < ActiveRecord::Base
   attr_accessible :firstname, :lastname, :email, :phone, :altphone,
                   :drive_order,
-                  :perm_milk, :perm_butter, :perm_cream
+                  :deposit, :perm_milk, :perm_butter, :perm_cream
 
   has_many :orders
   has_many :payments, dependent: :destroy
@@ -21,15 +21,6 @@ class Buyer < ActiveRecord::Base
 
   def name
   	"#{firstname + " " + lastname}"
-  end
-
-  def deposit
-    if !Milkrun.last.nil?
-      m = Milkrun.last
-      (perm_milk * m.mprice) + (perm_butter * m.bprice) + (perm_cream * m.cprice)
-    else
-      (perm_milk * 5) + (perm_butter * 5) + (perm_cream * 10)
-    end
   end
 
   def debits

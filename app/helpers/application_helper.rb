@@ -13,11 +13,12 @@ module ApplicationHelper
   end
 
   def price(thing)
-    number_to_currency(thing, unit: "", negative_format: "%u%n")
+    number_to_currency(thing, unit: "")
   end
 
   def current_cycle
-    @current_cycle = Cycle.where('startdate <= ? AND lastdate > ?', Time.now + 1.week, Time.now + 1.week).first
+    @current_cycle = Cycle.where('startdate <= ? AND lastdate > ?',
+                        Time.now + 2.weeks, Time.now + 1.week).first
   end
 
 end
