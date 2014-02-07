@@ -50,6 +50,10 @@
 	<% end %>
 	</div>
 
+	<div class="noprint btn-group newbutton">	
+		<%= link_to_function(image_tag("icon_print.png"), "javascript:print()", class: "btn btn-default", id: "icon_print") %>
+	</div>
+
   <span class="btn-group newbutton">
   	<%= link_to "NEW PAYMENT", new_buyer_payment_path(@buyer.id), class: "btn btn-primary" %>
   	<%= link_to "SETTINGS", edit_buyer_path(@buyer.id), class: "btn btn-default" %>
@@ -61,10 +65,12 @@
 	<span class="runtotals">
 		<% if @buyer.balance >= 0 %>	
 			Current Balance:
-			<div class="label label-success"> <%= price(@buyer.balance) %></div>
+			<div class="noprint label label-success"> <%= price(@buyer.balance) %></div>
+			<div class="noscreen green"> <%= price(@buyer.balance) %></div>
 		<% else %>
 			Current Balance:
-			<div class="label label-danger"> <%= price(@buyer.balance) %></div>
+			<div class="noprint label label-danger"> <%= price(@buyer.balance) %></div>
+			<div class="noscreen red"> <%= price(@buyer.balance) %></div>
 		<% end %>
 	</span>
 </h3>
@@ -123,13 +129,15 @@
 
     	<!-- 3. TYPE  4 5 6 -->
 	    	<% if t.is_a? Order %>
-		    	<td class="number"><span class="label label-info">Order</span></td>
+		    	<td class="noprint number"><span class="label label-info">Order</span></td>
+		    	<td class="noscreen number">Order</td>
 		    	<td class="number">-</td>		    	
 		    	<td class="number"><%= t.milk %></td>
 		    	<td class="number"><%= t.buttermilk %></td>
 		    	<td class="number"><%= t.cream %></td>
 	    	<% else %>
-		    	<td class="number"><span class="label label-success">Payment</span></td>
+		    	<td class="noprint number"><span class="label label-success">Payment</span></td>
+		    	<td class="noscreen number">Payment</span></td>
 		    	<td class="number"><%= t.category %></td>
 		    	<td class="number"></td>
 		    	<td class="number"></td>
@@ -138,9 +146,11 @@
 
     	<!-- 7. AMOUNT -->
 	    	<% if t.is_a? Order %>
-		    	<td class="number"><span class="dollar">$</span><%= price(t.amount_due) %></td>
+		    	<td class="noprint number"><span class="dollar">$</span><%= price(t.amount_due) %></td>
+		    	<td class="noscreen number"><span class="red"><%= price(t.amount_due) %></td>
 	    	<% else %>
-		    	<td class="number"><span class="dollar">$</span><span class="label label-success"><%= price(t.amount) %></span></td>
+		    	<td class="noprint number"><span class="label label-success"><%= price(t.amount) %></span></td>
+		    	<td class="noscreen number"><span class="green"><%= price(t.amount) %></span></td>
 	    	<% end %>
 
     	<!-- 8. -->

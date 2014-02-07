@@ -83,9 +83,9 @@
 
 	      <!-- TOTAL COST -->
 	      <% if ord.buyer.balance >= 0  %>
-	      <td class="number"></span>&#9786;</span></td>
+	      <td class="number">&#9786;</td>
 	      <% else %>
-	      <td class="number"><span class="dollar">$</span><%= price(ord.buyer.balance) %></td>
+	      <td class="number"><span class="red"><%= price(ord.buyer.balance.abs) %></span></td>
 	      <% end %>
 
 	    </tr>
@@ -105,8 +105,6 @@
 	      <td class="number"><%= x.c_orders %></td>
 	      <td class="number"><%= x.order_count %></td>
 
-	      <td class="noprint number"></td>
-	      <td class="noprint number"></td>
 	      <td class="noprint number"></td>
 
 	    </tr>

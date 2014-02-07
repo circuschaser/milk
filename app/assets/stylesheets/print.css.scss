@@ -89,7 +89,9 @@
   }
 
   .blue,
-  .orange {
+  .orange,
+  .red,
+  .green {
     padding: 2px 4px 1px 4px;
     border-radius: 3px;
     font-weight: bold;
@@ -101,6 +103,14 @@
 
   .orange {
     border: 3px solid Orange;
+  }
+
+  .green {
+    border: 2px solid Green;
+  }
+
+  .red {
+    border: 2px solid Crimson;
   }
 
   .contact {
@@ -173,12 +183,6 @@
     padding-top: 12px;
   }
 
-  span.dollar {
-    color: $darkGray;
-    font-size: 13px;
-    padding: 0 2px 0 0;
-  }
-
   span.label a {
     text-decoration: none;
     color: white;
@@ -211,6 +215,22 @@
       /*color: black;*/
       font-size: 16px;
       font-weight: normal;
+    }
+    .green {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 4px 6px 4px 6px;
+      /*color: black;*/
+      /*font-size: 14px;*/
+      font-weight: bold;
+    }
+    .red {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 4px 6px 4px 6px;
+      /*color: black;*/
+      /*font-size: 16px;*/
+      font-weight: bold;
     }
     div a {
       color: white;
