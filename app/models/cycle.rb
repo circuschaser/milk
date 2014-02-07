@@ -1,7 +1,7 @@
 class Cycle < ActiveRecord::Base
   attr_accessible :name, :startdate, :lastdate
 
-  has_many :milkruns, dependent: :destroy
+  has_many :milkruns, order: :position, dependent: :destroy
   accepts_nested_attributes_for :milkruns
 
   default_scope order: 'startdate ASC'
@@ -12,9 +12,11 @@ class Cycle < ActiveRecord::Base
   	@drivers = @buyers - @nondrivers
   	@drivers.sort! {|x,y| x.drive_order <=> y.drive_order }
   	@mdate = startdate
+  	@pos = 1
   	@drivers.count.times do
-			@milkrun = milkruns.create(date: @mdate)
+			@milkrun = milkruns.create(date: @mdate, position: @pos)
 			@mdate += 3.weeks
+			@pos += 1
 		end
 
 		milkruns.each do |m|
@@ -62,6 +64,14 @@ class Cycle < ActiveRecord::Base
 			end
 			@mdate += 3.weeks
 		end
+	end
+
+	def drivers
+		drivers = []
+		milkruns.each do |m|
+			drivers.push(m.driver.drive_order)
+		end
+		drivers
 	end
 
 end

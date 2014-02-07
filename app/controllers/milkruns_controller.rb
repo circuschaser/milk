@@ -1,4 +1,9 @@
 class MilkrunsController < ApplicationController
+
+	def index
+		@milkruns = Milkrun.order('position ASC')
+	end
+
   def new
   	@cycle = Cycle.find(params[:cycle_id])
   	@milkrun = @cycle.milkruns.build
@@ -86,5 +91,28 @@ class MilkrunsController < ApplicationController
 		@milkrun.destroy
 		redirect_to :back
 	end
+
+	def sort
+		# params[:prefix] must be same as in <li id> in view
+		@milks = params[:milkrun]
+		@milks.each_with_index do |id, index|
+			Milkrun.update_all({position: index+1}, {id: id})
+		end
+		@cycle = Milkrun.find(@milks.first).cycle
+		@x = 0
+		@cycle.milkruns.each do |m|
+			m.update_attribute(:date, @cycle.startdate + (@x * 3).weeks)
+			@x += 1
+		end
+		render nothing: true
+	end
+
+
+
+
+
+
+
+
 
 end

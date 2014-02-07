@@ -1,5 +1,6 @@
 class Milkrun < ActiveRecord::Base
   attr_accessible :cycle_id,
+                  :position,
                   :date,
   								:mprice, :bprice, :cprice,
   								:gasprice, :distance, :mpg,
@@ -14,7 +15,7 @@ class Milkrun < ActiveRecord::Base
   scope :active, where(active: true)
   scope :inactive, where(active: false)
 
-  default_scope order: 'date ASC'
+  default_scope order: 'position ASC'
 
   accepts_nested_attributes_for :orders, :buyers
 
@@ -62,6 +63,10 @@ class Milkrun < ActiveRecord::Base
     d.update_attribute(:milk, 0)
     d.update_attribute(:buttermilk, 0)
     d.update_attribute(:cream, 0)
+  end
+
+  def driver
+    orders.find_by_driver(true).buyer
   end
 
   def m_orders

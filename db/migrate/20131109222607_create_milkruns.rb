@@ -1,6 +1,7 @@
 class CreateMilkruns < ActiveRecord::Migration
   def change
     create_table :milkruns do |t|
+      t.integer :position
       t.date    :date
       t.integer :cycle_id
       

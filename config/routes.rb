@@ -3,9 +3,9 @@ Milk::Application.routes.draw do
   devise_for :users
 
   authenticated :user do
-    root :to => "milkruns#index"
+    root :to => "cycles#home"
   end
-  root :to => "milkruns#index"
+  root :to => "cycles#home"
 
 
   resources :users
@@ -40,6 +40,7 @@ Milk::Application.routes.draw do
       get :orders
     end
     collection do
+      post 'sort'
       get :active
       get :inactive
     end
@@ -51,8 +52,5 @@ Milk::Application.routes.draw do
       get :milkruns
     end
   end
-
-  match '/milkruns', to: "milkruns#index"
-
 
 end

@@ -1,0 +1,131 @@
+    <% if !@cycle.milkruns.empty? %>
+
+      <% @cycle.milkruns.each do |m| %>
+      <tr id="milkrun_<%= m.id %>">
+
+        <td><%= link_to m.date.strftime("%B %d"), milkrun_path(m) %></td>
+        
+        <td class="button">
+          <% if m.active? %>
+            <div class="btn-group btn-group-xs">
+              <%= link_to image_tag("icon_check_wht.png"), deactivate_milkrun_path(m), class: "btn btn-success icon" %>
+              <%= link_to image_tag("icon_view2.png"), milkrun_path(m), class: "btn btn-info icon_view" %>
+              <%= link_to image_tag("icon_edit_wht.png"), edit_milkrun_path(m), class: "btn label-default icon" %>
+              <%= link_to image_tag("icon_delete2.png"), m, class: "btn btn-warning icon",
+                  method: :delete, data: { confirm: "Do you really want to delete this Milk Run?" } %>
+            </div>
+          <% else %>
+            <div class="btn-group btn-group-xs">
+              <%= link_to image_tag("icon_check_gray.png"), activate_milkrun_path(m), class: "btn btn-default icon" %>
+              <%= link_to image_tag("icon_edit.png"), edit_milkrun_path(m), class: "btn btn-default icon" %>
+              <%= link_to image_tag("icon_delete.png"), m, class: "btn btn-default icon",
+                  method: :delete, data: { confirm: "Do you really want to delete this Milk Run?" } %>
+            </div>
+          <% end %>
+        </td>
+
+        <% if !m.driver.nil? %>
+          <% @driver = m.driver %>
+          <td class="run"><%= link_to @driver.name, @driver %></td>
+
+          <% @next = @cycle.milkruns.find_by_position(m.position+1) %>
+          <% @prev = @cycle.milkruns.find_by_position(m.position-1) %>
+
+          <!-- if FIRST -->
+          <% if     @prev.nil? &&
+                    @driver.drive_order > @cycle.drivers.min %>
+
+              <td>
+                <span class="label label-warning"><%= @driver.drive_order %></span>
+              </td>
+
+          <!-- if LAST -->
+          <% elsif  @next.nil? &&
+                    @prev.driver.drive_order > @driver.drive_order %>
+
+              <td>
+                <span class="label label-warning"><%= @driver.drive_order %></span>
+              </td>
+
+          <!-- in the MIDDLE -->
+          <% elsif !@next.nil? && !@prev.nil? &&
+                    @next.driver.drive_order > @driver.drive_order &&
+                    @prev.driver.drive_order < @driver.drive_order %>
+
+              <td>
+                <span class="label label-info"><%= @driver.drive_order %></span>
+              </td>
+
+          <% elsif !@next.nil? && !@prev.nil? &&
+                    (@next.driver.drive_order == @driver.drive_order + 1 ||
+                    @prev.driver.drive_order == @driver.drive_order - 1) %>
+
+              <td>
+                <span class="label label-info"><%= @driver.drive_order %></span>
+              </td>
+              
+          <% elsif  @driver.drive_order == m.position %>
+
+              <td>
+                <span class="label label-info"><%= @driver.drive_order %></span>
+              </td>
+
+          <% elsif !@next.nil? && !@prev.nil? &&
+                    (@next.driver.drive_order < @driver.drive_order ||
+                    @prev.driver.drive_order > @driver.drive_order) %>
+
+              <td>
+                <span class="label label-warning"><%= @driver.drive_order %></span>
+              </td>
+
+          <% else %>
+              <td>
+                <span class="label label-info"><%= @driver.drive_order %></span>
+              </td>
+          <% end %>
+
+
+        <% else %>
+          <td class="label label-default">-</td>
+          <td></td>
+        <% end %>
+
+        <% if m.active? %>
+          <td class="number"><%= m.m_orders %></td>
+          <td class="number"><%= m.b_orders %></td>
+          <td class="number"><%= m.c_orders %></td>
+          <td class="number"><%= price(m.order_total) %></td>
+
+          <% if m.gas == 0 %>
+            <td class="number"><span class="label label-danger"><%= link_to price(m.gas), edit_milkrun_path(m) %></span></td>
+          <% else %>
+            <td class="number"><%= price(m.gas) %></td>
+          <% end %>
+        
+          <td class="number"><%= m.freezer_bags %></td>
+          <td class="number"><%= m.ice %></td>
+          <td class="number"><%= price(m.ice_cost) %></td>
+          <td class="number"><%= price(m.total_cost) %></td>
+
+        <% else %>
+          <!-- greyed out zeros -->
+          <td class="number zero"><%= m.m_orders %></td>
+          <td class="number zero"><%= m.b_orders %></td>
+          <td class="number zero"><%= m.c_orders %></td>
+          <td class="number zero"><%= price(m.order_total) %></td>
+          <td class="number zero"><%= price(m.gas) %></td>    
+          <td class="number zero"><%= m.freezer_bags %></td>
+          <td class="number zero"><%= m.ice %></td>
+          <td class="number zero"><%= price(m.ice_cost) %></td>
+          <td class="number zero"><%= price(m.total_cost) %></td>
+
+        <% end %>
+
+      </tr>
+      <% end %>
+
+    <% else %>
+      <tr>
+        <td>NO MILK RUNS FOUND.</td>
+      </tr>
+    <% end %>

@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20140111020221) do
   end
 
   create_table "milkruns", :force => true do |t|
+    t.integer  "position"
     t.date     "date"
     t.integer  "cycle_id"
     t.decimal  "mprice"

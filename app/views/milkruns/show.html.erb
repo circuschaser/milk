@@ -40,6 +40,8 @@
 </br>
 
 <div class="span8">
+<% if !@milkrun.orders.nil? && @milkrun.active %>
+
 <table class="table table-condensed">
   <thead>
     <tr>
@@ -60,7 +62,6 @@
     </tr>
   </thead>
 
-  <% if !@milkrun.orders.nil? && @milkrun.active %>
 	  <tbody>
 	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
 	    <% sorted.each do |ord| %>
@@ -150,13 +151,43 @@
 
 	    </tr>
   	</tbody>
-  <% else %>
+<% else %>
+  <table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>DRIVER</th>
+      <th class="noprint"></th>
+
+      <th>MILK</th>
+      <th>BUTTER</th>
+      <th>CREAM</th>
+      <th>GALLONS</th>
+      <th>ORDER COST</th>
+
+      <th>TRIP COST</th>
+      <th>PPG</th>
+      <th>TOTAL</th>
+
+    </tr>
+  </thead>
+
 	  <tbody>
 			<tr>
+
 				<td>
-					<% @driver = @milkrun.orders.find_by_driver(true).buyer %>
+	      <!-- BUTTONS -->
+	      <span class="button noprint">
+		      <div class="btn-group btn-group-xs">
+		      	<% @ord = @milkrun.orders.find_by_driver(true) %>
+						<!-- EDIT ORDER -->
+		      	<%= link_to image_tag("icon_edit.png"), edit_order_path(@ord), class: "btn btn-default icon" %>
+		      </div>
+        </span>
+
+					<% @driver = @milkrun.driver %>
 					<%= link_to @driver.name, buyer_path(@driver) %>
 		  	</td>
+
 		  </tr>
 	  </tbody>
 
