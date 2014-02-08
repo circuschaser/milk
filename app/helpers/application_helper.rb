@@ -21,4 +21,9 @@ module ApplicationHelper
                         Time.now + 2.weeks, Time.now + 1.week).first
   end
 
+  def current_run
+    @current_run = Milkrun.where('date <= ? AND date > ?',
+                        Time.now + 2.weeks, Time.now - 1.week).first
+  end
+
 end

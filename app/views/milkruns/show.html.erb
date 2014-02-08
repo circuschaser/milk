@@ -14,16 +14,19 @@
 
 	<% x = @milkrun %>
 	<% if x.diff <= 0 %>
-	<div class="noprint runtotals btn btn-default">
+	<div class="runtotals" class="noprint btn btn-default">
 		<div class="label label-danger"><%= price(x.diff) %></div>
 	</div>
 	<% else %>
-	<div class="noprint runtotals btn btn-default">
+	<div class="runtotals" class="noprint btn btn-default">
 		<div class="label label-success"><%= price(x.diff) %></div>
 	</div>
 	<% end %>
 
-	<div class="noprint btn-group newbutton">	
+	<div class="noprint btn-group newbutton">
+	<% if !@milkrun.active? %>
+    <%= link_to "ACTIVATE", activate_milkrun_path(@milkrun), class: "btn btn-success" %>
+  <% end %>
 	  <%= link_to "NEW ORDER", new_milkrun_order_path(@milkrun.id), class: "btn btn-primary" %>
 	  <%= link_to "SETTINGS", edit_milkrun_path(@milkrun), class: "btn btn-default" %>
 	  <%= link_to image_tag("icon_print.png"), p_pickup_milkrun_path, class: "btn btn-default", id: "icon_print" %>
@@ -67,9 +70,12 @@
 	    <% sorted.each do |ord| %>
 	    <tr>
 	    	<!-- DRIVER -->
-	    	<% if ord.driver? %>
+      	<% if ord.driver? && ord.buyer.gas_credits > 0 %>
 		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
 		      <td><span class="label label-success noprint"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
+		    <% elsif ord.driver? && ord.buyer.gas_credits <= 0 %>
+		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+		      <td></td>
 	    	<% else %>
 	    	<!-- NON DRIVER -->
 	  	    <td></td>
@@ -80,8 +86,8 @@
 	      <td class="button noprint">
 		      <div class="btn-group btn-group-xs">
 		      	<!-- PAY BUYER -->
-		      	<% if ord.driver? %>
-						<%= link_to image_tag("icon_pay.png"), new_buyer_payment_path(ord.buyer.id), class: "btn btn-default icon" %>
+						<% if ord.buyer.balance >= 0 %>
+						<%= link_to image_tag("icon_pay.png"), "#", class: "btn btn-default icon" %>
 						<% else %>
 						<%= link_to image_tag("icon_pay.png"), new_buyer_payment_path(ord.buyer.id), class: "btn btn-success icon" %>
 						<% end %>

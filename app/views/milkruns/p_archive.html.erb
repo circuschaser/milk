@@ -13,11 +13,11 @@
 	<div class="noprint p_ref">ARCHIVE PRINT</div>
 
 <div class="diff">
-	<div class="runtotals btn btn-default">
+	<div class="runtotals" class="btn btn-default">
 		TO DRIVER
 		<div class="label label-warning"><%= price(@milkrun.total_trip_cost.floor) %></div>
 	</div>
-	<div class="runtotals btn btn-default">
+	<div class="runtotals" class="btn btn-default">
 		TO FARM
 		<div class="label label-warning"><%= price(@milkrun.order_total) %></div>
 	</div>
@@ -26,11 +26,11 @@
 <% x = @milkrun %>
 <div class="diff">
 	<% if x.diff <= 0 %>
-	<div class="runtotals btn btn-default">
+	<div class="runtotals" class="btn btn-default">
 		<div class="label label-danger">- <%= price(x.diff) %></div>
 	</div>
 	<% else %>
-	<div class="runtotals btn btn-default">
+	<div class="runtotals" class="btn btn-default">
 		<div class="label label-success">+ <%= price(x.diff) %></div>
 	</div>
 	<% end %>

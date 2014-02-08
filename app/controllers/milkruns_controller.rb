@@ -14,6 +14,10 @@ class MilkrunsController < ApplicationController
 		@milkrun = @cycle.milkruns.create(params[:milkrun])
 	end
 
+	def home
+		@milkrun = @current_run
+	end
+
 	def duplicate
   	@cycle = Cycle.find(params[:cycle_id])
 		@milkrun = @cycle.milkruns.last

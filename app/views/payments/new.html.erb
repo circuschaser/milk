@@ -13,7 +13,7 @@
 	<% if @payment.buyer.balance >= 0 %>	
 		Current Balance: <span id="balance" class="label label-success"> <%= @payment.buyer.balance %></span>
 	<% else %>
-		Current Balance: <span id="balance" class="label label-danger"> <%= @payment.buyer.balance %></span>
+		Current Balance: <span id="balance" class="label label-danger"> <%= @payment.buyer.balance.abs %></span>
 	<% end %>
 	</div>
 

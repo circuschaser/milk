@@ -29,24 +29,24 @@
 	</div>
 
 	<% if @buyer.gas_credits > 0 %>
-		<div class="runtotals btn btn-default">
+		<div class="runtotals" class="btn btn-default">
 			GAS CREDIT EARNED
 			<div class="label label-info"><%= price(@buyer.gas_credits) %></div>
 		</div>
 	<% end %>
 
-		<div class="runtotals btn btn-default">
+		<div class="runtotals" class="btn btn-default">
 			DRIVE COUNT
 			<div class="badge"><%= @buyer.drivecount %></div>
 		</div>
 
-	<div class="runtotals btn btn-default">
+	<div class="runtotals" class="btn btn-default">
 	<% if @buyer.balance >= 0 %>	
 		Current Balance:
 		<div class="label label-success"> <%= price(@buyer.balance) %></div>
 	<% else %>
 		Current Balance:
-		<div class="label label-danger"> <%= price(@buyer.balance) %></div>
+		<div class="label label-danger"> <%= price(@buyer.balance.abs) %></div>
 	<% end %>
 	</div>
 
@@ -65,12 +65,10 @@
 	<span class="runtotals">
 		<% if @buyer.balance >= 0 %>	
 			Current Balance:
-			<div class="noprint label label-success"> <%= price(@buyer.balance) %></div>
 			<div class="noscreen green"> <%= price(@buyer.balance) %></div>
 		<% else %>
 			Current Balance:
-			<div class="noprint label label-danger"> <%= price(@buyer.balance) %></div>
-			<div class="noscreen red"> <%= price(@buyer.balance) %></div>
+			<div class="noscreen red"> <%= price(@buyer.balance.abs) %></div>
 		<% end %>
 	</span>
 </h3>

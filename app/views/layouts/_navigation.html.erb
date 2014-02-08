@@ -1,5 +1,9 @@
 <div id="logo">
-<%= link_to image_tag("milklogo.png"), root_path %>
+<% if current_run.nil? %>
+	<%= link_to image_tag("milklogo.png"), root_path %>
+<% else %>
+	<%= link_to image_tag("milklogo.png"), milkrun_path(current_run) %>
+<% end %>
 </div>
 
 <!-- <div class="span8"> -->
