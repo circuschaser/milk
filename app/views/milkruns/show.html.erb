@@ -25,7 +25,7 @@
 
 	<div class="noprint btn-group newbutton">
 	<% if !@milkrun.active? %>
-    <%= link_to "ACTIVATE", activate_milkrun_path(@milkrun), class: "btn btn-success" %>
+    <%= link_to "ACTIVATE", activate_milkrun_path(@milkrun), class: "btn btn-danger" %>
   <% end %>
 	  <%= link_to "NEW ORDER", new_milkrun_order_path(@milkrun.id), class: "btn btn-primary" %>
 	  <%= link_to "SETTINGS", edit_milkrun_path(@milkrun), class: "btn btn-default" %>
@@ -112,17 +112,25 @@
 	      <td class="number"><%= ord.gallons %></td>
 
 	    	<!-- ORDER COST -->
+	    	<% if ord.gallons == 0 %>
+	      <td class="number">-</td>
+	      <% else %> 
 	      <td class="number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
+	      <% end %>
 
 	      <!-- TRIP COST -->
-      	<% if ord.under == true %>
+	      <% if ord.gallons == 0 %>
+	      <td class="number">-</td>	   
+      	<% elsif ord.under == true %>
 		      <td class="number"><%= price(ord.capped) %></td>
 	      <% else %>
 		      <td class="number"><%= price(ord.capped) %></td>
 		    <% end %>
 
 		    <!-- PER GALLON COST -->
-      	<% if ord.under == true %>
+		    <% if ord.gallons == 0 %>
+		      <td class="number">-</td>	   
+      	<% elsif ord.under == true %>
 		      <td class="number"><span class="label label-info"><%= ord.capped_ppg %></span></td>
 	      <% elsif ord.capped_ppg > 1 %>
 		      <td class="number"><span class="label label-danger"><%= ord.capped_ppg %></span></td>
@@ -131,8 +139,11 @@
 	      <% end %>
 
 	      <!-- TOTAL COST -->
+	      <% if ord.gallons == 0 %>
+	      <td class="number">-</td>	   
+	      <% else %>
 	      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
-
+	      <% end %>
 	    </tr>
     	<% end %>
   	</tbody>

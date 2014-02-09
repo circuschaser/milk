@@ -51,44 +51,50 @@
 	  <tbody>
 	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
 	    <% sorted.each do |ord| %>
-	    <tr>
-	    	<!-- NAME -->
-	    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+	    <% if ord.gallons == 0 %>
+	    	<tr class="noscreen noprint"></tr>
+	    <% else %>
+		    <tr>
+		    	<!-- NAME -->
+		    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
 
-	    	<!-- DRIVE DATE -->
-	    	<% if ord.driver? %>
-		      <td class="name">DRIVER</td>
-	    	<!-- NON DRIVER -->
-	    	<% elsif (ord.buyer.nextdrive.empty?) || (ord.buyer.nextdate > ord.milkrun.cycle.lastdate) %>
-		      <td class="name">done</td>
-		    <% else %>
-	    	  <td class="name"><%= link_to "#{ord.buyer.nextdate.strftime("%B %d, %Y")}", ord.milkrun %></td>
-	    	<% end %>
+		    	<!-- DRIVE DATE -->
+		    	<% if ord.driver? %>
+			      <td class="name">DRIVER</td>
+		    	<!-- NON DRIVER -->
+		    	<% elsif ord.buyer.drive_order.nil? %>
+			      <td class="name">-</td>
+		    	<% elsif (ord.buyer.nextdrive.empty?) || (ord.buyer.nextdate > ord.milkrun.cycle.lastdate) %>
+			      <td class="name">done</td>
+			    <% else %>
+		    	  <td class="name"><%= link_to "#{ord.buyer.nextdate.strftime("%B %d, %Y")}", ord.milkrun %></td>
+		    	<% end %>
 
-	    	<!-- GOT MILK -->
-	    	<td class="noscreen number box icon_view2"><%= image_tag("icon_view2.png") %></td>
+		    	<!-- GOT MILK -->
+		    	<td class="noscreen number box icon_view2"><%= image_tag("icon_view2.png") %></td>
 
-	    	<!-- MILK GALLONS -->
-	      <td class="number"><%= ord.milk %></td>
+		    	<!-- MILK GALLONS -->
+		      <td class="number"><%= ord.milk %></td>
 
-	    	<!-- BUTTERMILK GALLONS -->
-	      <td class="number"><%= ord.buttermilk %></td>
+		    	<!-- BUTTERMILK GALLONS -->
+		      <td class="number"><%= ord.buttermilk %></td>
 
-	    	<!-- CREAM GALLONS -->
-	      <td class="number"><%= ord.cream %></td>
+		    	<!-- CREAM GALLONS -->
+		      <td class="number"><%= ord.cream %></td>
 
-	    	<!-- TOTAL GALLON COUNT -->
-	      <td class="number"><%= ord.gallons %></td>
+		    	<!-- TOTAL GALLON COUNT -->
+		      <td class="number"><%= ord.gallons %></td>
 
 
-	      <!-- TOTAL COST -->
-	      <% if ord.buyer.balance >= 0  %>
-	      <td class="number">&#9786;</td>
-	      <% else %>
-	      <td class="number"><span class="red"><%= price(ord.buyer.balance.abs) %></span></td>
-	      <% end %>
+		      <!-- TOTAL COST -->
+		      <% if ord.buyer.balance >= 0  %>
+		      <td class="number">&#9786;</td>
+		      <% else %>
+		      <td class="number"><span class="red"><%= price(ord.buyer.balance.abs) %></span></td>
+		      <% end %>
 
-	    </tr>
+		    </tr>
+		    <% end %>
     	<% end %>
   	</tbody>
 	  <tbody>

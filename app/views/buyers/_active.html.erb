@@ -33,9 +33,9 @@
     <td class="number"><%= b.altphone %></td>
 
   <% if b.balance < 0 %>
-    <td class="number"><span class="label label-danger"><%= b.balance.abs %></span></td>
+    <td class="number"><span class="label label-danger"><%= price(b.balance.abs) %></span></td>
   <% else %>
-    <td class="number"><span class="label label-success"><%= b.balance %></span></td>
+    <td class="number"><span class="label label-success"><%= price(b.balance) %></span></td>
   <% end %>
 
     <td class="number"><span class="label label-default"><%= b.deposit %></span></td>

@@ -77,47 +77,51 @@
 	  <tbody>
 	  	<% sorted = @milkrun.orders.sort! {|x,y| x.buyer.lastname <=> y.buyer.lastname } %>
 	    <% sorted.each do |ord| %>
-	    <tr>
-	    	<!-- DRIVER -->
-	    	<% if ord.driver? %>
-		      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
-		      <td><span class="label label-success noprint"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
-	    	<% else %>
-	    	<!-- NON DRIVER -->
-	  	    <td></td>
-	    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
-	    	<% end %>
+	    <% if ord.gallons == 0 %>
+	    	<tr class="noscreen noprint"></tr>
+	    <% else %>
+		    <tr>
+		    	<!-- DRIVER -->
+		    	<% if ord.driver? %>
+			      <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+			      <td><span class="label label-success noprint"><%= link_to "PAY DRIVER", new_buyer_payment_path(ord.buyer.id) %></span></td>
+		    	<% else %>
+		    	<!-- NON DRIVER -->
+		  	    <td></td>
+		    	  <td class="name"><%= link_to "#{ord.buyer.name}", ord.buyer %></td>
+		    	<% end %>
 
 
 
 
 
-	    	<!-- MILK GALLONS -->
-	      <td class="number"><%= ord.milk %></td>
+		    	<!-- MILK GALLONS -->
+		      <td class="number"><%= ord.milk %></td>
 
-	    	<!-- BUTTERMILK GALLONS -->
-	      <td class="number"><%= ord.buttermilk %></td>
+		    	<!-- BUTTERMILK GALLONS -->
+		      <td class="number"><%= ord.buttermilk %></td>
 
-	    	<!-- CREAM GALLONS -->
-	      <td class="number"><%= ord.cream %></td>
+		    	<!-- CREAM GALLONS -->
+		      <td class="number"><%= ord.cream %></td>
 
-	    	<!-- TOTAL GALLON COUNT -->
-	      <td class="number"><%= ord.gallons %></td>
+		    	<!-- TOTAL GALLON COUNT -->
+		      <td class="number"><%= ord.gallons %></td>
 
-	    	<!-- ORDER COST -->
-	      <td class="number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
+		    	<!-- ORDER COST -->
+		      <td class="number"><span class="dollar">$</span><%= price(ord.order_cost) %></td>
 
-	      <!-- TRIP COST -->
-      	<% if ord.under == true %>
-		      <td class="number"><%= price(ord.capped) %></td>
-	      <% else %>
-		      <td class="number"><%= price(ord.capped) %></td>
+		      <!-- TRIP COST -->
+	      	<% if ord.under == true %>
+			      <td class="number"><%= price(ord.capped) %></td>
+		      <% else %>
+			      <td class="number"><%= price(ord.capped) %></td>
+			    <% end %>
+
+		      <!-- TOTAL COST -->
+		      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
+
+		    </tr>
 		    <% end %>
-
-	      <!-- TOTAL COST -->
-	      <td class="number"><span class="dollar">$</span><%= price(ord.amount_due) %></td>
-
-	    </tr>
     	<% end %>
   	</tbody>
 	  <tbody>
