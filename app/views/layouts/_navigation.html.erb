@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="nav pull-right btn-group">
-    <%= link_to 'LOG OUT', destroy_user_session_path, :method=>'delete',
+    <%= link_to 'SIGN OUT', destroy_user_session_path, :method=>'delete',
     																						class: "btn btn-default" %>
   </div>
 
@@ -26,8 +26,8 @@
 	</div>
 
 	<div class="btn-group">
-    <%= link_to 'LOG IN', new_user_session_path, class: "btn btn-default" %>
-    <%= link_to 'SIGN UP', new_user_registration_path, class: "btn btn-default" %>
+    <%= link_to 'SIGN IN', new_user_session_path, class: "btn btn-default" %>
+		<!-- NAVIGATION LINK FOR NEW USER in NAVSCRAP-->
   </div>
 
 <% end %>
