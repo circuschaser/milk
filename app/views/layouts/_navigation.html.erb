@@ -1,17 +1,33 @@
-<div id="logo">
-<% if current_run.nil? %>
-	<%= link_to image_tag("milklogo.png"), root_path %>
+<% if user_signed_in? %>
+
+	<div id="logo">
+	<% if current_run.nil? %>
+		<%= link_to image_tag("milklogo.png"), root_path %>
+	<% else %>
+		<%= link_to image_tag("milklogo.png"), milkrun_path(current_run) %>
+	<% end %>
+	</div>
+
+
+	<div class="btn-group">
+	  <%= link_to "CYCLES", cycles_path, class: "btn btn-default" %>
+	  <%= link_to "MILK RUNS", root_path, class: "btn btn-default" %>
+	  <%= link_to "FAMILIES", active_buyers_path, class: "btn btn-default" %>
+	</div>
+
+	<div class="nav pull-right btn-group">
+    <%= link_to 'LOG OUT', destroy_user_session_path, :method=>'delete',
+    																						class: "btn btn-default" %>
+  </div>
+
 <% else %>
-	<%= link_to image_tag("milklogo.png"), milkrun_path(current_run) %>
+	<div id="logo">
+		<%= link_to image_tag("milklogo.png"), "#" %>
+	</div>
+
+	<div class="btn-group">
+    <%= link_to 'LOG IN', new_user_session_path, class: "btn btn-default" %>
+    <%= link_to 'SIGN UP', new_user_registration_path, class: "btn btn-default" %>
+  </div>
+
 <% end %>
-</div>
-
-<!-- <div class="span8"> -->
-<div class="btn-group">
-  <%= link_to "CYCLES", cycles_path, class: "btn btn-default" %>
-  <%= link_to "MILK RUNS", root_path, class: "btn btn-default" %>
-  <%= link_to "FAMILIES", active_buyers_path, class: "btn btn-default" %>
-</div>
-<!-- </div> -->
-
-<!-- NAV PULL-RIGHT from SCRAP -->

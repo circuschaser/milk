@@ -13,6 +13,83 @@
   $grayBorder:  #ddd;
   $darkGray:    #959186;
 
+/* SIGN IN                                               */
+
+  #signin {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    height: 140px;
+    width: 40%;
+    margin: 12px 10px 18px 0;
+    padding-left: 12px;
+    display: inline-block;
+    vertical-align: top;
+    /*color: transparent;*/
+    font-size: 12px;
+    font-weight: normal;
+    span.name {
+      color: gray;
+      margin: 0 0 42px 30px;
+    }
+    .controls {
+      line-height: 50%;
+    }
+    span.label {
+      color: gray;
+      font-size: 12px;
+      margin-top: -12px;
+      text-align: left;
+    }
+    .control-group {
+      padding: 0;
+      height: auto;
+      margin: 18px 0 24px 0;
+    }
+    input {
+      height: auto;
+      float: left;
+      width: 250px;
+      padding-left: 6px;
+    }
+    input.boolean {
+      width: 50px;
+    }
+    select,
+    .checkbox {
+      float: left;
+      font-size: 14px;
+    }
+    select {
+      padding: 5px 12px 0 8px;
+      option {
+        padding: 0 0 3px 8px;
+      }
+    }
+    .checkbox {
+      height: 12px;
+      width: 12px;
+      margin: 2px 14px 0 -12px;
+    }
+  }
+
+  #notice {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    width: 500px;
+    border-radius: 4px;
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
+    margin-top: 6px;
+    margin-bottom: 12px;
+    /*padding-top: 12px;*/
+    padding-left: 42px;
+    padding-right: 42px;
+    padding-bottom: 12px;
+    border: 1px solid $deepBlue;
+    border-radius: 4px;
+    background: white;
+  }
+
 /* MAIN                                               */
 
   .noscreen,

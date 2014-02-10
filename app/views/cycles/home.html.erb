@@ -1,80 +1,88 @@
-<h3>
-<% if current_cycle.nil? %>
-  <div class="newbutton2">
-   <%= link_to "CYCLES HOME", cycles_path, class: "btn btn-default" %>
-  </div>
-  MILK RUNS
-  <span class="newbutton">
-    <%= link_to "NEW CYCLE", new_cycle_path, class: "btn btn-primary" %>
-  </span>
+<% if user_signed_in? %>
 
-<% else %>
-  <div class="newbutton2">
-    <%= link_to "CURRENT CYCLE" + " " + "#{current_cycle.name}",cycles_path, class: "btn btn-success" %>
-  </div>
-
-  MILK RUNS
-
-  <div class="runtotals2">
-    START DATE
-    <div class="label label-info"><%= current_cycle.startdate.strftime("%b %Y") %></div>
-  </div>
-
-  <div class="runtotals2">
-    END DATE
-    <div class="label label-info"><%= current_cycle.lastdate.strftime("%b %Y") %></div>
-  </div>
-
-  <span class="btn-group newbutton">
-    <%= link_to "NEW MILK RUN", new_cycle_milkrun_path(current_cycle), class: "btn btn-primary" %>
-    <%= link_to "SETTINGS", edit_cycle_path(current_cycle), class: "btn btn-default" %>
-  </span>
-<% end %>
-</h3>
-</br>
-
-<div class="span8">
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>DATE</th>
-      <th></th>
-
-      <th>DRIVER</th>
-      <th></th>
-
-      <th>MILK</th>
-      <th>BUTTER</th>
-      <th>CREAM</th>
-
-      <th>MILK TOTAL</th>
-      <th>GAS</th>
-
-      <th>FREEZER BAGS</th>
-
-      <th>ICE BAGS</th>
-      <th>ICE COST</th>
-
-      <th>TOTAL COST</th>
-    </tr>
-  </thead>
-  <tbody id="trackorder">
-  <% if !current_cycle.nil? %>
-  <% @cycle = current_cycle %>
-
-  <%= render 'cycles/milktable' %>
+  <h3>
+  <% if current_cycle.nil? %>
+    <div class="newbutton2">
+     <%= link_to "CYCLES HOME", cycles_path, class: "btn btn-default" %>
+    </div>
+    MILK RUNS
+    <span class="newbutton">
+      <%= link_to "NEW CYCLE", new_cycle_path, class: "btn btn-primary" %>
+    </span>
 
   <% else %>
-    <tr>
-      <td>THERE IS NO CURRENT CYCLE.</td>
-    </tr>
-  <% end %>
-  </tbody>
+    <div class="newbutton2">
+      <%= link_to "CURRENT CYCLE" + " " + "#{current_cycle.name}",cycles_path, class: "btn btn-success" %>
+    </div>
 
-</table>
+    MILK RUNS
+
+    <div class="runtotals2">
+      START DATE
+      <div class="label label-info"><%= current_cycle.startdate.strftime("%b %Y") %></div>
+    </div>
+
+    <div class="runtotals2">
+      END DATE
+      <div class="label label-info"><%= current_cycle.lastdate.strftime("%b %Y") %></div>
+    </div>
+
+    <span class="btn-group newbutton">
+      <%= link_to "NEW MILK RUN", new_cycle_milkrun_path(current_cycle), class: "btn btn-primary" %>
+      <%= link_to "SETTINGS", edit_cycle_path(current_cycle), class: "btn btn-default" %>
+    </span>
+  <% end %>
+  </h3>
+  </br>
+
+  <div class="span8">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>DATE</th>
+        <th></th>
+
+        <th>DRIVER</th>
+        <th></th>
+
+        <th>MILK</th>
+        <th>BUTTER</th>
+        <th>CREAM</th>
+
+        <th>MILK TOTAL</th>
+        <th>GAS</th>
+
+        <th>FREEZER BAGS</th>
+
+        <th>ICE BAGS</th>
+        <th>ICE COST</th>
+
+        <th>TOTAL COST</th>
+      </tr>
+    </thead>
+    <tbody id="trackorder">
+    <% if !current_cycle.nil? %>
+    <% @cycle = current_cycle %>
+
+    <%= render 'cycles/milktable' %>
+
+    <% else %>
+      <tr>
+        <td>THERE IS NO CURRENT CYCLE.</td>
+      </tr>
+    <% end %>
+    </tbody>
+
+  </table>
+  </div>
+
+<% else %>
+<div id="notice">
+  <h3>YOU MUST SIGN IN TO CONTINUE.</h3>
 </div>
 
+<% end %>
 
   <script>
     $("#trackorder").sortable({ 
