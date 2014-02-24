@@ -37,10 +37,13 @@
 
 	<div class="need">
 		<span class="left">
-			<p>Get <span class="blue"><%= pluralize(x.ice, "bag") %></span> of ice</p>
+			<p>
+				Get <span class="blue"><%= pluralize(x.ice, "bag") %></span> of ice for
+						<span class="blue"><%= pluralize(x.freezer_bags, "freezer bag") %></span>
+			</p>
 		</span>
 		<span class="right">
-			<p>you will need <span class="orange"><%= x.ice_cost %></span> in cash ($1 bills are easiest)</p>
+			<p>you need <span class="orange"><%= x.ice_cost %></span> in cash ($1 bills are best)</p>
 		</span>
 		</p>
 	</div>

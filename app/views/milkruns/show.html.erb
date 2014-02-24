@@ -23,6 +23,11 @@
 	</div>
 	<% end %>
 
+	<div class="runtotals" class="btn btn-default">
+		FREEZER BAGS
+		<div class="label label-primary"><%= @milkrun.freezer_bags %></div>
+	</div>
+
 	<div class="noprint btn-group newbutton">
 	<% if !@milkrun.active? %>
     <%= link_to "ACTIVATE", activate_milkrun_path(@milkrun), class: "btn btn-danger" %>
