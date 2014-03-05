@@ -7,6 +7,11 @@
 </h4>
 
 <%= simple_form_for @buyer do |f| %>
+  <% @buyers = Buyer.active %>
+  <% @nondrivers = @buyers.where(drive_order: nil) %>
+	<% @drivers = @buyers - @nondrivers %>
+	<% @drivers.sort! {|x,y| x.drive_order <=> y.drive_order } %>
+ 	<% @prevdriver = @drivers.last %>
 	<div id="newfamily">
 
 		<%= f.input :firstname, label: false, input_html: {class: "form-control"} %>
@@ -41,7 +46,7 @@
 			</br>
 				<div class="label label-danger">PLEASE SET DRIVE ORDER</div>
 		<% end %>
-		<%= f.input :drive_order, label: false, input_html: {class: "form-control"} %>
+		<%= f.input :drive_order, label: false, input_html: { value: "#{@prevdriver.drive_order + 1}",  class: "form-control"} %>
 		<span class="label">Drive Order</span>
 		<%= f.input :deposit, label: false, input_html: {class: "form-control"} %>
 		<span class="label">Deposit</span>

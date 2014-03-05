@@ -6,33 +6,54 @@ class MilkrunsController < ApplicationController
 
   def new
   	@cycle = Cycle.find(params[:cycle_id])
-  	@milkrun = @cycle.milkruns.build
-  end
+		@last = @cycle.milkruns.last
+  	@new = @cycle.milkruns.build
+  	@buyers = Buyer.active
+  	@nondrivers = @buyers.where(drive_order: nil)
+  	@drivers = @buyers - @nondrivers
+		@drivers.sort! {|x,y| x.drive_order <=> y.drive_order }
+ 		@orderbuyer = @drivers.last
 
-	def create
-  	@cycle = Cycle.find(params[:cycle_id])
-		@milkrun = @cycle.milkruns.create(params[:milkrun])
-	end
-
-	def home
-		@milkrun = @current_run
-	end
-
-	def duplicate
-  	@cycle = Cycle.find(params[:cycle_id])
-		@milkrun = @cycle.milkruns.last
-		@new = @milkrun.dup
-		@milkrun.orders.each do |x|
+		@last.orders.each do |x|
 			@new.orders << x.dup
 		end
 
 		if @new.save
-			@new.date += 3.weeks
+			@new.orders.first.buyer = @orderbuyer
+			@new.position = @last.position + 1
+			@new.date = @last.date + 3.weeks
+			@new.gasprice = "0"
+			@new.mprice = "5"
+			@new.bprice = "5"
+			@new.cprice = "10"
+			@new.distance = "260"
+			@new.mpg = "20"
+			@new.iceprice = "1.75"
+			@new.cool1 = "24"
+			@new.cool1_ice = "2"
+			@new.cool2 = "20"
+			@new.cool2_ice = "2"
+			@new.cool3 = "20"
+			@new.cool3_ice = "2"
+			@new.bag = "3"
+			@new.bag_ice = "0.5"
 			@new.save
-			redirect_to edit_milkrun_path(@new)
+			@new.save
+			@cycle.setlast
+			redirect_to :back
 		else
-			redirect_to '/milkruns'
-		end
+			redirect_to :back
+		end  
+	end
+
+	def create
+  	@cycle = Cycle.find(params[:cycle_id])
+		@milkrun = @cycle.milkruns.create(params[:milkrun])
+		redirect_to cycle_path(@cycle)
+	end
+
+	def home
+		@milkrun = @current_run
 	end
 
 	def show
@@ -93,6 +114,7 @@ class MilkrunsController < ApplicationController
 	def destroy
 		@milkrun = Milkrun.find(params[:id])
 		@milkrun.destroy
+		@milkrun.cycle.setlast
 		redirect_to :back
 	end
 

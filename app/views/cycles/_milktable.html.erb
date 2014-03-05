@@ -25,7 +25,7 @@
           <% end %>
         </td>
 
-        <% if !m.driver.nil? %>
+        <% if !m.orders.empty? %>
           <% @driver = m.driver %>
           <td class="run"><%= link_to @driver.name, @driver %></td>
 

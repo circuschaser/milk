@@ -69,7 +69,7 @@ class Cycle < ActiveRecord::Base
 	def drivers
 		drivers = []
 		milkruns.each do |m|
-			drivers.push(m.driver.drive_order)
+			drivers.push(m.driver.drive_order) unless m.orders.empty?
 		end
 		drivers
 	end

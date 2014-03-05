@@ -43,6 +43,7 @@ Milk::Application.routes.draw do
       post 'sort'
       get :active
       get :inactive
+      get :duplicate
     end
   end
 
