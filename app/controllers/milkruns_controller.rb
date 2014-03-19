@@ -128,6 +128,9 @@ class MilkrunsController < ApplicationController
 		@x = 0
 		@cycle.milkruns.each do |m|
 			m.update_attribute(:date, @cycle.startdate + (@x * 3).weeks)
+			m.orders.each do |o|
+				o.update_attribute(:date, m.date)
+			end
 			@x += 1
 		end
 		render nothing: true
