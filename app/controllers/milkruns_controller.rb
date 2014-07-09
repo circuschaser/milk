@@ -62,8 +62,10 @@ class MilkrunsController < ApplicationController
 
   def activate
 		@milkrun = Milkrun.find(params[:id])
+		@prev = Milkrun.find_by_date(@milkrun.date-3.weeks)
 		@milkrun.active = true
 		@milkrun.fillorders
+		@milkrun.update_attribute(:iceprice, @prev.iceprice) unless @prev.nil?
 		if @milkrun.save
 			redirect_to :back
 		else

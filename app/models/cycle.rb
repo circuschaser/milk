@@ -26,7 +26,7 @@ class Cycle < ActiveRecord::Base
 			m.cprice = "10"
 			m.distance = "260"
 			m.mpg = "20"
-			m.iceprice = "1.75"
+			m.iceprice = "2.00"
 			m.cool1 = "24"
 			m.cool1_ice = "2"
 			m.cool2 = "20"
